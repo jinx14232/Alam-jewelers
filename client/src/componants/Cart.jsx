@@ -26,7 +26,7 @@ function Cart(props) {
 
                         <div>
                             <strong>{titleCase(i.name)}</strong>
-                            <div className="meta">{i.gold_purity} · {i.weight_grams}g</div>
+                            <div className="meta">{i.price} -/Rs</div>
                             <button className="remove-item" onClick={()=>props.removeItem(i.id)}>Remove</button>
                         </div>
                     </div>

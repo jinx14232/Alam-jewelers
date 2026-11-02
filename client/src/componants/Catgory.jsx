@@ -10,54 +10,96 @@ function Catgory(props) {
     const { currentTab, categories, products } = props
 
     const [metalFilter, setMetalFilter] = useState('all')
+    const [catFilter, setCatFilter] = useState('all')
+
+    //catFilter
+    useEffect(()=>{
+        setCatFilter('all')
+        setMetalFilter('all')
+    },[currentTab])
 
     return (
         <>
             <section className='catelog' id='catelog'>
 
-                <div className="metal-select-cont">
-                    <label htmlFor="metal">
-                        Select Metal
-                    </label>
-                    <select
-                        id="metal-select"
-                        name="metal"
-                        value={metalFilter}
-                        onChange={(e) => setMetalFilter(e.currentTarget.value)}
-                    >
-                        <option value="all">All</option>
+                <div className="filters">
+                    <div className="metal-select-cont">
+                        <label htmlFor="metal-select">
+                            Select Metal
+                        </label>
+                        <select
+                            id="metal-select"
+                            name="metal"
+                            value={metalFilter}
+                            onChange={(e) => setMetalFilter(e.currentTarget.value)}
+                        >
+                            <option value="all">All</option>
 
-                        {
-                            props.metals.map(metal => (
-                                <option
-                                    key={metal.id}
-                                    value={metal.name}
-                                >
-                                    {metal.name}
-                                </option>
-                            ))
+                            {
+                                props.metals.map(metal => (
+                                    <option
+                                        key={metal.id}
+                                        value={metal.name}
+                                    >
+                                        {metal.name}
+                                    </option>
+                                ))
 
-                        }
+                            }
 
-                    </select>
+                        </select>
+                    </div>
+                    <div className="metal-select-cont">
+                        <label htmlFor="metal-select">
+                            Select Category
+                        </label>
+                        <select
+                            id="metal-select"
+                            name="Category"
+                            value={catFilter}
+                            onChange={(e) => setCatFilter(e.currentTarget.value)}
+                        >
+                            <option value="all">All</option>
+
+                            {
+                                categories.map(cat => (
+                                    <option
+                                        key={cat.id}
+                                        value={cat.name}
+                                    >
+                                        {cat.name}
+                                    </option>
+                                ))
+
+                            }
+
+                        </select>
+                    </div>
                 </div>
 
-                
 
                 {!props.loadingCat ? categories.map((cat) => {
 
                     //filter items of specific category and metal
                     const items = products.filter(p =>
+
                         p.category_id == cat.id &&
                         p.gender == currentTab &&
+                        (
+                            catFilter === 'all' ||
+                            p.category == catFilter
+                        ) &&
                         (
                             metalFilter === 'all' ||
                             p.metals.some(metal => metal.name === metalFilter)
                         )
                     )
-
+                    {console.log("about to render category, catFilter ", catFilter, " cat.name ", cat.name)}
+                    if (catFilter != 'all' && cat.name != catFilter)
+                        return <></>
                     return (
                         <section className="category" key={cat.id}>
+                            {console.log('rendered ', cat.name)}
                             <h2>{cat.name}</h2>
                             <div className="orn" />
 
@@ -80,6 +122,7 @@ function Catgory(props) {
                             }
 
                         </section>
+
                     )
 
                 }) : <Loader />}

@@ -230,25 +230,31 @@ button {
     position: relative;
     min-height: 200px;
 
-    .metal-select-cont {
-        color: var(--ink);
-        font-size: 1rem;
-        font-family: inherit;
+    .filters {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-top: 10px;
-        margin-left: 20px;
-        
-        #metal-select {
-            background-color: var(--maroon);
-            border: 1px solid var(--line);
-            color: var(--card);
-            text-transform: capitalize;
-            font-family: inherit;
-            padding: 8px 24px;
-            border-radius: 20px;
+        justify-content: start;
+        gap: 30px;
+        padding: 20px;
+        padding-bottom: 0;
+
+        .metal-select-cont {
+            color: var(--ink);
             font-size: 1rem;
+            font-family: inherit;
+            display: flex;
+            align-items: start;
+            flex-direction: column;
+
+            #metal-select {
+                background-color: var(--maroon);
+                border: 1px solid var(--line);
+                color: var(--card);
+                text-transform: capitalize;
+                font-family: inherit;
+                padding: 8px 24px;
+                border-radius: 20px;
+                font-size: 1rem;
+            }
         }
     }
 
@@ -381,6 +387,7 @@ button {
     text-align: center;
     font-size: .88rem;
     font-weight: 300;
+    margin-top: 30px;
 
     h3 {
         color: #f6ead0;
