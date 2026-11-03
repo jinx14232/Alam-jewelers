@@ -60,7 +60,7 @@ function Model(props) {
 
                 <h2>{props.product.name}</h2>
                 <p className="desc">{props.product.description}</p>
-                <h3 className="price" >Price: {props.product.price}</h3>
+                <h3 className="price" >Price: {props.product.price} -/Rs</h3>
                 <h2>Metal Details</h2>
 
                 {props.product.metals.map(metal => {

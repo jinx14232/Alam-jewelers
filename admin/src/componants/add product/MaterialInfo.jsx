@@ -13,7 +13,7 @@ export default function MaterialInfo({ form, setForm, metals, selectedMetals, ch
     }
 
     function handleMetalInfoChange(metalIndex, detailIndex, field, value) {
-        
+
         setForm(prev =>
             prev.map((metal, i) =>
                 i === metalIndex
@@ -53,7 +53,6 @@ export default function MaterialInfo({ form, setForm, metals, selectedMetals, ch
         <>
             <section className="form-section">
                 <h2>Metal Information</h2>
-
                 <div className="metal-selection">
                     <p>Choose metals from following:</p>
                     <div className="metals">
@@ -75,6 +74,7 @@ export default function MaterialInfo({ form, setForm, metals, selectedMetals, ch
                 {selectedMetals.map((metal, index) => (
                     <section key={index} className="form-section">
                         <h2 className="partition sub-heading" >{metal.name} Details & Pricing</h2>
+                        <p style={{color: "var(--muted)"}}>Write exact words you want in field and value (purtity: 21k) etc.</p>
 
                         {
                             form.map((metalInfo, metalIdx) => {

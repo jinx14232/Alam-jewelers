@@ -40,7 +40,7 @@ export default function ({ basicInfo, metalInfo, previewImages, selectedMetal })
 
                     <h2>{basicInfo.name}</h2>
                     <p className="desc">{basicInfo.description}</p>
-                    <h3 className="price" >Price: {basicInfo.price}</h3>
+                    <h3 className="price" >Price: {basicInfo.price} -/Rs</h3>
                     <h2>Metal Details</h2>
                     {selectedMetal.map(metal => {
                         const info = metalInfo.find(

@@ -1,9 +1,9 @@
-import BasicInfo from './add product/BasicInfo.jsx'
-import MaterialInfo from './add product/MaterialInfo.jsx'
-import ImageUpload from './add product/ImageUpload.jsx'
-import Actions from './add product/Actions.jsx'
-import PreviewModel from './add product/PreviewModel.jsx'
-import Loader from './add product/Loader.jsx'
+import BasicInfo from './BasicInfo.jsx'
+import MaterialInfo from './MaterialInfo.jsx'
+import ImageUpload from './ImageUpload.jsx'
+import Actions from './Actions.jsx'
+import PreviewModel from './PreviewModel.jsx'
+import Loader from './Loader.jsx'
 
 import {useState, useEffect} from 'react'
 

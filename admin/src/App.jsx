@@ -1,37 +1,48 @@
 import AddProduct from "./componants/add product/AddProduct.jsx"
+import AdminLayout from "./AdminLayout.jsx"
 import './style.css'
-import { useEffect, useState } from 'react'
+import {
+    BrowserRouter,
+    Routes,
+    Route
+} from 'react-router-dom'
 
-export default function App() {
-  const [metals, setMetals] = useState([])
+function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
 
+                <Route
+                    path="/admin"
+                    element={<AdminLayout />}
+                >
 
-  useEffect(() => {
+                    <Route
+                      index
+                      element={<AddProduct />}
+                    />
+                    <Route
+                        path="/admin/biscuits"
+                        element={<AddProduct />}
+                    />
+                    <Route
+                        path="/admin/products"
+                        element={<AddProduct />}
+                    />
+                    <Route
+                        path="/admin/categories"
+                        element={<AddProduct />}
+                    />
+                    <Route
+                        path="/admin/metals"
+                        element={<AddProduct />}
+                    />
 
-    async function getMetals() {
-      try {
-        const responce = await fetch('http://localhost:5000/metals')
-        const data = await responce.json()
-        setMetals(data)
-      }
-      catch (e) {
-        console.log('error mateials', e)
-      }
-    }
+                </Route>
 
-    getMetals()
-
-  }, [])
-
-  return (
-    <>
-
-
-      <AddProduct
-        metals= {metals}
-      />
-
-
-    </>
-  )
+            </Routes>
+        </BrowserRouter>
+    )
 }
+
+export default App
