@@ -102,27 +102,19 @@ button {
     z-index: 20;
     background-color: var(--maroon);
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: space-between;
     padding: 10px 30px;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
 
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        h2 {
-            color: var(--cream);
-        }
-    }
-
     .links {
-
+        width: 182px;
         a {
             color: var(--cream);
             text-decoration: none;
-            margin-left: 10px;
+            /* margin-left: 10px; */
+            font-size: clamp(.95rem, 2.5vw, 1.3rem);
+
         }
 
         a:hover,
@@ -133,12 +125,54 @@ button {
         .cart-btn {
             background: none;
             color: var(--cream);
-            padding: 6px 14px;
-            /* font-size: clamp(1.3rem, 3vw, 2rem); */
-            font-size: 1rem;
+            /* padding: 0 14px; */
+            font-size: clamp(1.3rem, 3vw, 2rem);
             border: none;
+            font-size: clamp(.95rem, 2.5vw, 1.3rem);
+
         }
 
+        .left {
+            margin-right: 10px;
+        }
+
+        .right {
+            margin-left: 10px;
+        }
+
+    }
+    .links-left{
+        text-align: left;
+    }
+    .links-right{
+        text-align: right;
+    }
+    .menu-btn {
+        display: none;
+    }
+
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .text {
+        text-align: center;
+    }
+
+    h2 {
+        color: var(--cream);
+        letter-spacing: 4px;
+        font-size: clamp(1.5rem, 3vw, 3.5rem);
+    }
+
+    span {
+        letter-spacing: 5px;
+        color: var(--cream);
+        font-size: clamp(1rem, 2vw, 1.3rem);
+        font-family: 'Cormorant Garamond';
     }
 
 }
@@ -151,6 +185,7 @@ button {
     justify-content: end;
     position: relative;
     background-color: var(--maroon);
+    margin-top: 120px;
 }
 
 .container {
@@ -178,7 +213,7 @@ button {
 
     background-image: url('./assets/hero.png');
     background-size: cover;
-    background-position: 0 0;
+    background-position: 0 -20px;
     background-repeat: no-repeat;
 
     opacity: 1;
@@ -641,7 +676,6 @@ button {
     }
 
     .hero-img {
-        /* background-image: url('./assets/hero-mob-2.png');  */
         background-position: 0;
 
     }
@@ -657,15 +691,62 @@ button {
 
     .hero-section {
         min-height: 460px;
+        margin-top: 65px;
     }
 
     .container {
         width: 100%;
     }
 
-    .links>a {
+    .nav-bar {
+        justify-content: space-between;
+        padding: 10px 25px;
+
+        .logo {
+            flex-direction: row;
+            margin: 0;
+
+            .logo-img {
+                width: 45px;
+            }
+
+            .text {
+                text-align: left;
+                margin-left: 10px;
+
+                h2 {
+                    font-size: clamp(1.2rem, 5vw, 1.5rem);
+                }
+
+                span {
+                    font-size: clamp(.9rem, 4vw, 1rem);
+                }
+            }
+        }
+
+        .menu-btn {
+            align-self: center;
+            background: none;
+            border: none;
+            display: block;
+            color: var(--card);
+            font-size: clamp(1.5rem, 5vw, 2rem);
+        }
+    }
+
+    .nav-bar .links>a {
         display: none;
     }
+
+    .links .cart-btn.right {
+        margin-left: 0;
+    }
+
+    .nav-bar .links-left {
+        display: none;
+    }
+
+
 }
 
 
@@ -721,6 +802,62 @@ button {
     }
 }
 
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 240px;
+    height: 100vh;
+
+    background: var(--maroon);
+    color: var(--card);
+
+    padding: 25px 15px;
+
+    overflow-y: auto;
+    z-index: 100;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar {
+    .sidebar-logo>img {
+        width: 60px;
+    }
+
+    .sidebar-logo>.text>h2 {
+        font-size: clamp(2rem, 3vw, 4rem);
+    }
+
+    .sidebar-logo>.text>span {
+        font-size: clamp(1rem, 2vw, 1.3rem);
+    }
+}
+
+.sidebar .links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 50px;
+
+    a {
+        font-size: 1rem;
+        text-wrap: nowrap;
+        text-decoration: none;
+        color: var(--card);
+        padding: 13px 15px;
+        border-radius: 6px;
+        transition: 0.2s;
+        font-family: 'Jost', Arial, Helvetica, sans-serif;
+    }
+    a.active{
+        color:var(--gold);
+    }
+}
 
 
 .loader-container {

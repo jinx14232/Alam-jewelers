@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-
+//class was assign wrt mobile and desktop navigation
 function Navigation(props) {
     return (
         <nav className={props.class}>

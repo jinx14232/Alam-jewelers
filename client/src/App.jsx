@@ -4,7 +4,8 @@ import Shop from './componants/Shop.jsx'
 import Footer from './componants/Footer.jsx'
 import Cart from './componants/Cart.jsx'
 import Splash from './componants/Splash.jsx'
-import react from 'react'
+import Sidebar from './componants/Sidebar.jsx'
+import react, { useEffect } from 'react'
 
 function App() {
 
@@ -30,11 +31,14 @@ function App() {
 
   }
 
+  const [menuOpen, setMenuOpen] = react.useState(false)
+
   return (
     <>
     <Splash/>
     <Header
         onCartClick = {()=> setShowCart(true)}
+        setMenuOpen={setMenuOpen}
      />
      <main>
         <Hero/>
@@ -45,6 +49,13 @@ function App() {
         />
      </main>
      <Footer/>
+
+     {menuOpen && 
+     <>
+        <div className="ov" style={{ zIndex: 45 }} onClick={() => setMenuOpen(false)} />
+        <Sidebar setMenuOpen = {()=>setMenuOpen(false)}/>
+      </>
+     }
 
      {showCart && 
      <>
