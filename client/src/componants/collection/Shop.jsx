@@ -1,8 +1,7 @@
-import '../style.css'
 import Tabs from './Tabs.jsx'
 import react from 'react'
 import Catgory from './Catgory.jsx'
-import { tabsText } from '../Utility.js'
+import { tabsText } from '../../Utility.js'
 import { useEffect } from 'react'
 
 function Shop(props) {

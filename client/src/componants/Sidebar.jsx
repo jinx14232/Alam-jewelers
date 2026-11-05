@@ -21,7 +21,7 @@ function Sidebar(props) {
 
             <div className="links">
                     <a href="" className="active">Collections</a>
-                    <a href="">Biscuits</a>
+                    <a href="">Bars</a>
                     <a href="">Live Rates</a>
                     <a href="">Contacts</a>
             </div>

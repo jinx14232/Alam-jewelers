@@ -21,6 +21,42 @@ app.get('/', (req, res) => {
     res.send(`<h1>Server</>`)
 })
 
+app.post('/addbar', upload.array('image', 1), async (req, res) => {
+
+    const {
+        metal,
+        weight,
+        weight_unit,
+        brand,
+        fineness,
+        price,
+        karat
+    } = req.body
+
+
+    try {
+
+        const imageUrls = await Promise.all(
+            req.files.map(file => uploadImage(file))
+        )
+    
+        db.prepare(`
+            INSERT INTO bars(metal, weight, weight_unit, brand, fineness, karat, price, image_url) VALUES 
+            (?,?,?,?,?,?,?,?)
+        `).run(metal, weight, weight_unit, brand, fineness, karat, price, imageUrls[0])
+
+        res.json({
+            message: 'success',
+        })
+
+    } catch (e) {
+        console.error(e)
+        res.status(500).json({ error: 'bar upload failed' })
+    }
+    console.log('bar inserted')
+
+})
+
 app.post('/addproduct', upload.array('images', 5), async (req, res) => {
 
     const {

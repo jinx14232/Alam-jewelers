@@ -1,9 +1,9 @@
 import BasicInfo from './BasicInfo.jsx'
 import MaterialInfo from './MaterialInfo.jsx'
-import ImageUpload from './ImageUpload.jsx'
-import Actions from './Actions.jsx'
+import ImageUpload from '../ImageUpload.jsx'
+import Actions from '../Actions.jsx'
 import PreviewModel from './PreviewModel.jsx'
-import Loader from './Loader.jsx'
+import Loader from '../Loader.jsx'
 
 import {useState, useEffect} from 'react'
 
@@ -116,8 +116,6 @@ export default function ({ metals }) {
 
         const data = createProductData()
 
-        console.log([...data.entries()])
-
         try {
             const responce = await fetch('http://localhost:5000/addproduct',
                 {
@@ -157,7 +155,7 @@ export default function ({ metals }) {
     return (
         <>
             {loading && <Loader />}
-            <form className="product-form surfaced-bg" onSubmit={handleSubmit}>
+            <form className="add-form" onSubmit={handleSubmit}>
 
                 <BasicInfo
                     form={basicInfo}
@@ -174,12 +172,13 @@ export default function ({ metals }) {
                 />
 
                 <ImageUpload
+                    heading="Product Images"
+                    maxUploads={5}
                     images={images}
+                    onImagesChange={setImages}
                     previewImages={previewImages}
                     setPreviewImages={setPreviewImages}
-                    onImagesChange={setImages}
                 />
-
 
                 <Actions
                     handleCancel={handleCancel}
@@ -194,7 +193,6 @@ export default function ({ metals }) {
                         selectedMetal={selectedMetals}
                     />
                 }
-
 
             </form>
         </>

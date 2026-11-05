@@ -1,5 +1,4 @@
-import '../style.css'
-import { tabsText } from '../Utility.js'
+import { tabsText } from '../../Utility.js'
 
 function Tabs(props){
     return(

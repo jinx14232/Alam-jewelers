@@ -1,8 +1,7 @@
-import '../style.css'
 import Card from './Card.jsx'
 import Model from './Model.jsx'
 import { useState, useEffect } from 'react'
-import Loader from './Loader.jsx'
+import Loader from '../Loader.jsx'
 
 function Catgory(props) {
 

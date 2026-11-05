@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react'
-import Header from './Header.jsx'
+import Header from '../Header.jsx'
 import Form from './Form.jsx'
 
 export default function AddProduct() {
@@ -26,9 +26,11 @@ export default function AddProduct() {
 
     return (
         <>
-
-            <div className="add-product-page">
-                <Header />
+            <div className="admin-page">
+                <Header
+                    heading='Add New Product'
+                    subHeading='Add a new piece to your jewelry collection.'
+                />
                 <Form
                     metals={metals}
                 />

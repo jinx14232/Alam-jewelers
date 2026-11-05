@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react'
 
-export default function ImageUpload({ images, previewImages, setPreviewImages, onImagesChange }) {
+export default function ImageUpload({heading, maxUploads, images, onImagesChange, previewImages, setPreviewImages }) {
 
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function ImageUpload({ images, previewImages, setPreviewImages, o
 
         onImagesChange(prev => {
             const combined = [...prev, ...validImages]
-            return combined.slice(0, 5)
+            return combined.slice(0, maxUploads)
         })
 
         e.target.value = ''
@@ -47,19 +47,19 @@ export default function ImageUpload({ images, previewImages, setPreviewImages, o
 
     return (
         <section className="form-section">
-            <h2>Product Images</h2>
+            <h2>{heading}</h2>
             <div className="image-upload">
                 <label className="upload-box">
                     <span className="upload-icon">＋</span>
 
-                    <strong>Click to upload images</strong>
+                    <strong>Click to upload image{maxUploads>1?'s':''}</strong>
 
                     <span className="upload-description">
-                        Select multiple images from your device
+                        Select {maxUploads>1?'multiple images':'single image'} from your device
                     </span>
 
                     <span className="upload-formats">
-                        PNG, JPG, WEBP · Up to 5 images
+                        PNG, JPG, WEBP · Up to {maxUploads} image{maxUploads>1?'s':''}
                     </span>
 
                     <input
@@ -68,7 +68,7 @@ export default function ImageUpload({ images, previewImages, setPreviewImages, o
                         multiple
                         hidden
                         onChange={handleImageChange}
-                        disabled={images.length > 5}
+                        disabled={images.length >= maxUploads}
                     />
                 </label>
 

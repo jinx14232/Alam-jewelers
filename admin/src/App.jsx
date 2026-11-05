@@ -1,5 +1,10 @@
 import AddProduct from "./componants/add product/AddProduct.jsx"
 import AdminLayout from "./AdminLayout.jsx"
+import Dashboard from './componants/Dashboard.jsx'
+import Bars from './componants/Bars.jsx'
+import Categories from './componants/Categories.jsx'
+import Metals from './componants/Metals.jsx'
+
 import './style.css'
 import {
     BrowserRouter,
@@ -19,23 +24,23 @@ function App() {
 
                     <Route
                       index
-                      element={<AddProduct />}
-                    />
-                    <Route
-                        path="/admin/biscuits"
-                        element={<AddProduct />}
+                      element={<Dashboard />}
                     />
                     <Route
                         path="/admin/products"
                         element={<AddProduct />}
                     />
                     <Route
+                        path="/admin/bars"
+                        element={<Bars />}
+                    />
+                    <Route
                         path="/admin/categories"
-                        element={<AddProduct />}
+                        element={<Categories />}
                     />
                     <Route
                         path="/admin/metals"
-                        element={<AddProduct />}
+                        element={<Metals />}
                     />
 
                 </Route>

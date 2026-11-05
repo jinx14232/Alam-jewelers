@@ -8,7 +8,7 @@ function Navigation(props) {
                 Dashboard
             </NavLink>
 
-            <NavLink to="/admin/biscuits">
+            <NavLink to="/admin/bars">
                 Add Biscuit
             </NavLink>
 

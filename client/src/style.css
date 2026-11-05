@@ -129,7 +129,6 @@ button {
             font-size: clamp(1.3rem, 3vw, 2rem);
             border: none;
             font-size: clamp(.95rem, 2.5vw, 1.3rem);
-
         }
 
         .left {
@@ -744,6 +743,9 @@ button {
 
     .nav-bar .links-left {
         display: none;
+    }
+    .nav-bar .links-right {
+        width: auto;
     }
 
 

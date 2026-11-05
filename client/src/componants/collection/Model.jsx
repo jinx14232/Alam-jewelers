@@ -1,4 +1,3 @@
-import { tabsText, titleCase } from "../Utility.js"
 import { useState } from "react"
 
 function Model(props) {
@@ -48,15 +47,6 @@ function Model(props) {
             </div>
 
             <div className="model-body">
-
-                {/* <h2>{titleCase(props.product.name)}</h2>
-                <p style={{ marginTop: 8, fontSize: ".92rem" }}>{props.product.description}</p> */}
-
-                {/* <table className="info"><tbody>
-                    <tr><td>Gold purity</td><td>{props.product.gold_purity} ({props.product.gold_purity === "22K" ? "916" : "875"})</td></tr>
-                    <tr><td>Approx. weight</td><td>{props.product.weight_grams} g</td></tr>
-                    <tr><td>Price</td><td>On request (by live rate) {props.product.price}</td></tr>
-                </tbody></table> */}
 
                 <h2>{props.product.name}</h2>
                 <p className="desc">{props.product.description}</p>

@@ -1,5 +1,4 @@
-import '../style.css'
-import {titleCase} from '../Utility.js'
+import {titleCase} from '../../Utility.js'
 
 function Card(props) {
 

@@ -19,7 +19,7 @@ export default function BasicInfo({form, setForm, categoriesGroup}) {
     return (
         <>
             <section className="form-section">
-                <h2 className="partition sub-heading">Basic Information</h2>
+                <h2 className="partition">Basic Information</h2>
 
                 <div className="form-grid">
 

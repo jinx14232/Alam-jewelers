@@ -8,8 +8,8 @@ function Header(props) {
             <nav className="nav-bar">
 
                 <div className="links links-left">
-                    <a href="#contact" className='left'>Collections</a>
-                    <a href="#contact" className='left'>Biscuits</a>
+                    <a href="#catelog" className='left'>Collections</a>
+                    <a href="#contact" className='left'>Bars</a>
 
                 </div>
 

@@ -71,6 +71,21 @@ db.exec(`
             REFERENCES products(id)
             ON DELETE CASCADE
     );
+
+    CREATE TABLE IF NOT EXISTS bars (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        metal TEXT NOT NULL 
+            CHECK(metal IN ('gold', 'silver')),
+        weight REAL NOT NULL,
+        weight_unit TEXT NOT NULL DEFAULT 'grams',
+        brand TEXT NOT NULL DEFAULT 'ARY',
+        fineness REAL,
+        karat INT,
+        price REAL NOT NULL,
+        image_url TEXT NOT NULL    
+    );
+
 `)
 
 export default db

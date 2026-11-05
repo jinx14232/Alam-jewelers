@@ -16,11 +16,11 @@ export default function Actions({ handleCancel, handlePreview}) {
             onClick={handlePreview}
 
           >
-            Product preview
+            Item preview
           </button>
 
           <button type="submit" className="btn filled">
-            Save Product
+            Save Item
           </button>
         </div>
         </>

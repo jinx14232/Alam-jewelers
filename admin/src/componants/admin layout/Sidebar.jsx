@@ -27,7 +27,6 @@ function Sidebar(props) {
                 <span>Welcome, Admin</span>
             </div>
 
-
         </aside>
     )
 }
