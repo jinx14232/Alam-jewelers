@@ -1,5 +1,6 @@
 import '../style.css'
 import logoImg from '../assets/logo.png'
+import { NavLink } from 'react-router-dom'
 
 function Header(props) {
 
@@ -8,8 +9,17 @@ function Header(props) {
             <nav className="nav-bar">
 
                 <div className="links links-left">
-                    <a href="#catelog" className='left'>Collections</a>
-                    <a href="#contact" className='left'>Bars</a>
+
+                     <NavLink to="/">
+                        Home
+                    </NavLink>
+                    <NavLink to="/collection" end>
+                        Collections
+                    </NavLink>
+
+                    <NavLink to="/bars">
+                        Bars
+                    </NavLink>
 
                 </div>
 
@@ -26,8 +36,14 @@ function Header(props) {
                 </div>
 
                 <div className="links links-right">
-                    <a href="#contact" className='right'>Live Rates</a>
-                    <button className= "cart-btn right" onClick={props.onCartClick}>Cart</button>
+
+                     <NavLink to="/liverates">
+                        Live Rates
+                    </NavLink>
+
+                    <a href="#contact">Contacts</a>
+                    <button className="cart-btn right" onClick={props.onCartClick}>Cart</button>
+
                 </div>
 
             </nav>

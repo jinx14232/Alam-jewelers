@@ -6,99 +6,88 @@ import Loader from '../Loader.jsx'
 function Catgory(props) {
 
     const [openedItem, setOpenedItem] = useState(null)
-    const { currentTab, categories, products } = props
-
-    const [metalFilter, setMetalFilter] = useState('all')
-    const [catFilter, setCatFilter] = useState('all')
-
-    //catFilter
-    useEffect(()=>{
-        setCatFilter('all')
-        setMetalFilter('all')
-    },[currentTab])
 
     return (
         <>
             <section className='catelog' id='catelog'>
 
-                <div className="filters">
-                    <div className="metal-select-cont">
-                        <label htmlFor="metal-select">
-                            Select Metal
-                        </label>
-                        <select
-                            id="metal-select"
-                            name="metal"
-                            value={metalFilter}
-                            onChange={(e) => setMetalFilter(e.currentTarget.value)}
-                        >
-                            <option value="all">All</option>
+                {props.allowFilter &&
 
-                            {
-                                props.metals.map(metal => (
-                                    <option
-                                        key={metal.id}
-                                        value={metal.name}
-                                    >
-                                        {metal.name}
-                                    </option>
-                                ))
+                    <div className="filters">
+                        {props.filters.map((filter, idx) => (
 
-                            }
+                            <div className="filter-cont" key={idx}>
 
-                        </select>
+                                <label htmlFor="filter-select">
+                                    Select {filter.text}
+                                </label>
+                                <select
+                                    className="filter-select"
+                                    name="filter"
+                                    value={filter.value}
+                                    onChange={(e) => filter.setFilter(e.currentTarget.value)}
+                                >
+                                    <option value="all">All</option>
+
+                                    {
+                                        filter.options.map((opt, id) => (
+                                            <option
+                                                key={id + idx}
+                                                value={opt.name}
+                                            >
+                                                {opt.name}
+                                            </option>
+                                        ))
+
+                                    }
+
+                                </select>
+                            </div>
+
+                        ))}
+
                     </div>
-                    <div className="metal-select-cont">
-                        <label htmlFor="metal-select">
-                            Select Category
-                        </label>
-                        <select
-                            id="metal-select"
-                            name="Category"
-                            value={catFilter}
-                            onChange={(e) => setCatFilter(e.currentTarget.value)}
-                        >
-                            <option value="all">All</option>
-
-                            {
-                                categories.map(cat => (
-                                    <option
-                                        key={cat.id}
-                                        value={cat.name}
-                                    >
-                                        {cat.name}
-                                    </option>
-                                ))
-
-                            }
-
-                        </select>
-                    </div>
-                </div>
+                }
 
 
-                {!props.loadingCat ? categories.map((cat) => {
+                {!props.loadingCat ? props.categories.map((cat) => {
 
                     //filter items of specific category and metal
-                    const items = products.filter(p =>
+                    let items = props.products
 
-                        p.category_id == cat.id &&
-                        p.gender == currentTab &&
-                        (
-                            catFilter === 'all' ||
-                            p.category == catFilter
-                        ) &&
-                        (
-                            metalFilter === 'all' ||
-                            p.metals.some(metal => metal.name === metalFilter)
+                    if (props.allowFilter) {
+
+                        //filters can be applied...
+                        //only product has filterd for now
+
+                        items = items.filter(p =>
+
+                            p.category_id == cat.id &&
+                            p.gender == props.currentTab &&
+                            //category filter
+                            (
+                                props.filters[1].value === 'all' ||
+                                p.category == props.filters[1].value
+                            ) &&
+                            //metal filter
+                            (
+                                props.filters[0].value === 'all' ||
+                                p.metals.some(metal => metal.name === props.filters[0].value)
+                            )
                         )
-                    )
-                    {console.log("about to render category, catFilter ", catFilter, " cat.name ", cat.name)}
-                    if (catFilter != 'all' && cat.name != catFilter)
-                        return <></>
+                    }
+                    else{
+                        //take bars of current tab
+                        items = items.filter(p=> p.metal == props.currentTab)
+                    }
+
+                    if (props.allowFilter) {
+                        if (props.filters[1].value != 'all' && cat.name != props.filters[1].value)
+                            return <></>
+                    }
+
                     return (
                         <section className="category" key={cat.id}>
-                            {console.log('rendered ', cat.name)}
                             <h2>{cat.name}</h2>
                             <div className="orn" />
 

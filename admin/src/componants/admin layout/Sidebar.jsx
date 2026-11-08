@@ -11,7 +11,7 @@ function Sidebar(props) {
             </button>
 
             <div className="sidebar-logo">
-                <img src="./logo.png" alt="logo" className='logo-img'/>
+                <img src="/logo.png" alt="logo" className='logo-img'/>
                 <h2>ALAM</h2>
                 <span>JEWELERS</span>
             </div>

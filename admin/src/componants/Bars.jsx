@@ -191,6 +191,7 @@ export default function () {
                             >
                                 <option value="ARY">ARY</option>
                                 <option value="Valcambi">Valcambi</option>
+                                <option value="PSL">PSL</option>
 
                             </select>
 

@@ -8,5 +8,7 @@ export function titleCase(name){
 export const tabsText = {
         'Women': 'women',
         'Men': 'men',
-        'New Born': 'newBorn'
+        'New Born': 'newBorn',
+        'Gold': 'gold',
+        'Silver': 'silver'
     }

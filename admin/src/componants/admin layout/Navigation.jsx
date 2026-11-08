@@ -9,7 +9,7 @@ function Navigation(props) {
             </NavLink>
 
             <NavLink to="/admin/bars">
-                Add Biscuit
+                Add Bar
             </NavLink>
 
             <NavLink to="/admin/products">

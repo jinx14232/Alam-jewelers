@@ -5,6 +5,9 @@ import {
 } from 'react-router-dom'
 import Layout from './Layout.jsx'
 import Collection from './componants/collection/Collection.jsx'
+import Bars from './componants/Bars.jsx'
+import LiveRates from './componants/LiveRates.jsx'
+import Home from './componants/Home.jsx'
 
 function App() {
 
@@ -17,8 +20,22 @@ function App() {
 
             <Route
               path='/'
+              element={<Home />}
+            />
+            <Route
+              path='/collection'
               element={<Collection />}
             />
+
+             <Route
+              path='/bars'
+              element={<Bars />}
+            />
+            <Route
+              path='/liverates'
+              element={<LiveRates />}
+            />
+
             
           </Route>
         </Routes>
@@ -29,14 +46,5 @@ function App() {
 }
 export default App
 
-// <>
-//  <main>
-//     <Shop
-//       onAddItem = {addItemInCart}
-//       removeItem = {removeItemInCart}
-//       cartItems = {cartItems.map(i=> i.id)}
-//     />
-//  </main>
-// </>
 
 

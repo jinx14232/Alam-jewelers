@@ -3,7 +3,7 @@ function Header(props) {
         <header className="admin-header">
 
             <div className="logo">
-                <img src="./logo.png" alt="logo" className='logo-img' />
+                <img src="/logo.png" alt="logo" className='logo-img' />
                 <div className="text">
                     <h2>ALAM</h2>
                     <span>JEWELERS</span>

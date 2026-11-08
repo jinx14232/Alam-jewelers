@@ -5,7 +5,7 @@ import Actions from '../Actions.jsx'
 import PreviewModel from './PreviewModel.jsx'
 import Loader from '../Loader.jsx'
 
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
 export default function ({ metals }) {
 
@@ -34,7 +34,7 @@ export default function ({ metals }) {
 
                 return existing || {
                     metal_id: metal.id,
-                    details: [{field: '', value: ''}]
+                    details: [{ field: '', value: '' }]
                 };
             });
         });
@@ -146,10 +146,12 @@ export default function ({ metals }) {
             name: '',
             description: '',
             gender: '',
-            category_id: ''
+            category_id: '',
+            price: ''
         })
         setMetalInfo([])
         setImages([])
+        setSelectedMetals([])
     }
 
     return (

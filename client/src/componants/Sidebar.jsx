@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 
 function Sidebar(props) {
 
@@ -20,10 +21,24 @@ function Sidebar(props) {
             </div>
 
             <div className="links">
-                    <a href="" className="active">Collections</a>
-                    <a href="">Bars</a>
-                    <a href="">Live Rates</a>
-                    <a href="">Contacts</a>
+
+                <NavLink to="/">
+                    Home
+                </NavLink>
+                <NavLink to="/collection" end>
+                    Collections
+                </NavLink>
+
+                <NavLink to="/bars">
+                    Bars
+                </NavLink>
+
+                <NavLink to="/liverates">
+                    Live Rates
+                </NavLink>
+
+                <a href="#contact">Contacts</a>
+
             </div>
 
 

@@ -2,7 +2,6 @@
 export default function MaterialInfo({ form, setForm, metals, selectedMetals, changeSelectedMetals }) {
 
     const handleMetalCheck = (mat) => {
-        console.log(selectedMetals.includes(mat))
         changeSelectedMetals((prevSelected) =>
 
             prevSelected.includes(mat)
@@ -61,7 +60,7 @@ export default function MaterialInfo({ form, setForm, metals, selectedMetals, ch
                                 <label>
                                     <input
                                         type="checkbox"
-                                        checked={selectedMetals.forEach(mat => mat.id == metal.id)}
+                                        checked={selectedMetals.some(mat => mat.id == metal.id)}
                                         onChange={() => handleMetalCheck(metal)}
                                     />
                                     <span>{metal.name}</span>

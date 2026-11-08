@@ -14,13 +14,13 @@ function Model(props) {
 
             <button className="x" onClick={props.onClose}>×</button>
 
-            <div className="tag">{props.product.gender} · {props.product.category}</div>
+            <div className="tag">{props.product.gender ? props.product.gender + ' · ' + props.product.category : props.product.metal} </div>
 
             <div className="model-img">
 
-                <img src={props.product.images[selectedImgIdx].image_url} alt={props.product.name} className='open-img cover preview' />
+                <img src={props.product.images?props.product.images[selectedImgIdx].image_url: props.product.image_url} alt={props.product.name} className='open-img cover preview' />
 
-                {props.product.images.length > 1 &&
+                {props.product.images?.length > 1 &&
 
                     <div className="more-img">
 
@@ -48,12 +48,14 @@ function Model(props) {
 
             <div className="model-body">
 
-                <h2>{props.product.name}</h2>
-                <p className="desc">{props.product.description}</p>
+                <h2 className={props.product.metal? 'bar-name': ''}>{props.product.name}</h2>
+                {props.product.description &&
+                    <p className="desc">{props.product.description}</p>
+                }
                 <h3 className="price" >Price: {props.product.price} -/Rs</h3>
-                <h2>Metal Details</h2>
+                <h2>{props.product.gender ? "Metal" : "Bar"} Details</h2>
 
-                {props.product.metals.map(metal => {
+                {props.product.metals ? props.product.metals.map(metal => {
 
                     return (
                         <table className="info" key={metal.id}>
@@ -73,7 +75,36 @@ function Model(props) {
                             </tbody>
                         </table>
                     )
-                })}
+                }) :
+
+                    <table className="info">
+
+                        <tbody>
+
+                            {props.product.metal == 'gold' &&
+                                <tr>
+                                    <td>Purity: </td>
+                                    <td>{props.product.karat}K</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td>Weight: </td>
+                                <td>{props.product.weight} {props.product.weight_unit}</td>
+                            </tr>
+                            <tr>
+                                <td>Fineness: </td>
+                                <td>{props.product.fineness}</td>
+                            </tr>
+                            <tr>
+                                <td>Brand: </td>
+                                <td>{props.product.brand}</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                }
 
 
                 <div className="row">

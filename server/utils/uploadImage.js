@@ -1,6 +1,6 @@
 import cloudinary from '../config/cloudinary.js'
 
-const uploadImage = (file) => {
+ export const uploadImage = (file) => {
     return new Promise((resolve, reject) => {
 
         const stream = cloudinary.uploader.upload_stream(
@@ -9,8 +9,7 @@ const uploadImage = (file) => {
             },
             (error, result) => {
                 if (error) return reject(error)
-
-                resolve(result.secure_url)
+                resolve({image_url: result.secure_url, public_id: result.public_id})
             }
         )
 
@@ -18,4 +17,13 @@ const uploadImage = (file) => {
     })
 }
 
-export default uploadImage
+export const deleteImage = (public_id) => {
+    return new Promise((resolve, reject) => {
+
+        cloudinary.uploader.destroy(public_id, (error, result) => {
+            if (error) return reject(error)
+            resolve(result)
+        })
+
+    })
+}
