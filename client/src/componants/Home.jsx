@@ -46,10 +46,10 @@ export default function () {
                     {loading ? <Loader /> :
                         <div className="grid-wrap">
                             {
-                                (recents.bars.length == 0 &&
+                                (recents.bars?.length == 0 &&
                                     recents.products.length == 0) ? <p>No recents upload</p> :
                                     <div className="home-grid">
-                                        {recents.products.map((product, id) => (
+                                        {recents.products?.map((product, id) => (
                                             <button className="card" key={id}  onClick={() => navigate('/collection')}>
 
                                                 <img src={product.image_url} className='cover' />
@@ -73,7 +73,7 @@ export default function () {
 
                                             </button>
                                         ))}
-                                        {recents.bars.map((product, id) => (
+                                        {recents.bars?.map((product, id) => (
                                             <button className="card" key={id}  onClick={() => navigate('/bars')}>
 
                                                 <img src={product.image_url} className='cover' />
