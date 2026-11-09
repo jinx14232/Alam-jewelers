@@ -14,7 +14,7 @@ function Card(props) {
             </div>
 
         </button>
-    );
+    )
 }
 
 export default Card

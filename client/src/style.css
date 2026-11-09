@@ -359,7 +359,7 @@ button {
 }
 
 .grid-wrap {
-    padding: 10px 0;
+    padding: 10px 30px;
 
 
 }
@@ -734,6 +734,9 @@ button {
 
 
 }
+.home-section>.grid-wrap{
+    padding: 10px 0;
+}
 
 .home-grid>.card {
     /* background-color: var(--card); */
@@ -798,16 +801,33 @@ button {
 .box{
     flex: 1;
     aspect-ratio: 1/1.5;
-    background-size: cover;
-    background-position: center;
     border-radius: 10px;
     position: relative;
     display: flex;
     align-items: end;
     justify-content: center;
     min-height: 200px;
-    h2{
+    overflow: hidden;
+    img{
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        object-fit: cover;
+        height: 100%;
+        transition: ease .3s;
+    }
+    a{
+        z-index: 1;
         color: var(--maroon);
+        font-size: 200%;
+        padding-bottom: 10px;
+        font-family: 'Cormorant Garamond', serif;
+    }
+}
+.box:hover{
+    border: 1px solid var(--gold);
+    img{
+        transform: scale(1.2);
     }
 }
 .box::after {
@@ -817,8 +837,8 @@ button {
     background: linear-gradient(
         to bottom,
         #33030a 0%,
-        rgba(51, 3, 10, 0.7) 20%,
-        transparent 50%
+        rgba(51, 3, 10, 0.7) 10%,
+        transparent 30%
     );
     pointer-events: none;
 }

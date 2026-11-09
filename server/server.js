@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174']
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://0mlxmjxd-5174.inc1.devtunnels.ms']
 }))
 const upload = multer({
     storage: multer.memoryStorage()
@@ -20,6 +20,8 @@ const upload = multer({
 app.get('/', (req, res) => {
     res.send(`<h1>Server</>`)
 })
+
+//add products and bar----------------------------
 
 app.post('/addbar', upload.array('image', 1), async (req, res) => {
 
@@ -124,6 +126,10 @@ function insertData(product, metals, imageData) {
     console.log('inserted into database')
 }
 
+
+//-------------------------------------------------
+
+
 app.get('/categories', (req, res) => {
 
     const categories = db.prepare(`
@@ -156,12 +162,12 @@ app.get('/overview', (req, res) => {
             SELECT COUNT(*) AS totalBars FROM bars
     `).all()
 
-    //total bars
+    //total cats
     const totalCat = db.prepare(`
             SELECT COUNT(*) AS totalCat FROM categories
     `).all()
 
-    //total bars
+    //total metals
     const totalMetals = db.prepare(`
             SELECT COUNT(*) AS totalMetals FROM metals
     `).all()
@@ -463,7 +469,6 @@ app.get('/products', (req, res) => {
     }
 
 })
-
 
 
 app.listen(PORT, () => {

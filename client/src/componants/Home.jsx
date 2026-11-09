@@ -1,10 +1,12 @@
 import react from 'react'
 import Loader from './Loader'
+import { useNavigate, NavLink } from 'react-router-dom';
 
 export default function () {
 
     const [recents, setRecents] = react.useState({})
     const [loading, setLoading] = react.useState(true)
+    const navigate = useNavigate()
 
     react.useEffect(() => {
         async function gettInv() {
@@ -48,7 +50,7 @@ export default function () {
                                     recents.products.length == 0) ? <p>No recents upload</p> :
                                     <div className="home-grid">
                                         {recents.products.map((product, id) => (
-                                            <button className="card" key={id}>
+                                            <button className="card" key={id}  onClick={() => navigate('/collection')}>
 
                                                 <img src={product.image_url} className='cover' />
 
@@ -72,7 +74,7 @@ export default function () {
                                             </button>
                                         ))}
                                         {recents.bars.map((product, id) => (
-                                            <button className="card" key={id}>
+                                            <button className="card" key={id}  onClick={() => navigate('/bars')}>
 
                                                 <img src={product.image_url} className='cover' />
 
@@ -101,9 +103,9 @@ export default function () {
                         <div className="content">
                             <h1>Finest Collection</h1>
                             <p>Explore out top rated collection with ratings</p>
-                            <a className="btn">
+                            <NavLink to='/collection' className='btn'>
                                 Explore
-                            </a>
+                            </NavLink>
                         </div>
                         <video autoPlay
                             muted
@@ -119,14 +121,25 @@ export default function () {
                         <p>Find what you want with easy distributions</p>
                     </div>
                     <div className="wrap">
-                        <div className="box" style={{ backgroundImage: 'url("../public/men.jpeg")' }}>
-                            <h2>Men</h2>
+                        <div className="box">
+                             <NavLink to='/collection'>
+                                Men
+                            </NavLink>
+                            <img src="../public/men.jpeg" alt="image" />
+                           
                         </div>
-                        <div className="box" style={{ backgroundImage: 'url("../public/women.jpeg")' }}>
-                            <h2>Women</h2>
+                        <div className="box">
+                            <NavLink to='/collection'>
+                                Women
+                            </NavLink>
+                            <img src="../public/women.jpeg" alt="image" />
+                            
                         </div>
-                        <div className="box" style={{ backgroundImage: 'url("../public/baby.jpeg")' }}>
-                            <h2>New Born</h2>
+                        <div className="box">
+                            <NavLink to='/collection'>
+                                New Born
+                            </NavLink>
+                            <img src="../public/baby.jpeg" alt="image" />   
                         </div>
                     </div>
 
@@ -137,9 +150,9 @@ export default function () {
                         <div className="content">
                             <h1>Golden Silver Bars</h1>
                             <p>Take a look at Bars collection.</p>
-                            <a className="btn">
+                           <NavLink to='/bars' className='btn'>
                                 Bars
-                            </a>
+                            </NavLink>
                         </div>
                         <video autoPlay
                             muted
