@@ -4,13 +4,20 @@ import { useEffect, useState } from "react"
 function Hero() {
 
     const slides = [
-        
+
         {
-            image: '/hero6.png',
+            image: '/hero.png',
             title: 'Elegance in every detail',
             description: 'Discover timeless rings crafted to make every moment special.',
             button: 'View Collections',
             link: '/'
+        },
+        {
+            image: '/hero5.png',
+            title: 'A timeless investment',
+            description: 'Explore our collection of gold and silver bars.',
+            button: 'Explore Bars',
+            link: '/bars'
         },
         {
             image: '/hero2.png',
@@ -21,13 +28,6 @@ function Hero() {
         },
         
         {
-            image: '/hero.png',
-            title: 'Elegance in every detail',
-            description: 'Discover timeless rings crafted to make every moment special.',
-            button: 'View Collections',
-            link: '/'
-        },
-        {
             image: '/hero3.png',
             title: 'Gold, part of nature',
             description: 'Traditional designs in 21K and 22K gold.',
@@ -36,13 +36,6 @@ function Hero() {
         },
         {
             image: '/hero4.png',
-            title: 'A timeless investment',
-            description: 'Explore our collection of gold and silver bars.',
-            button: 'Explore Bars',
-            link: '/bars'
-        },
-        {
-            image: '/hero5.png',
             title: 'A timeless investment',
             description: 'Explore our collection of gold and silver bars.',
             button: 'Explore Bars',

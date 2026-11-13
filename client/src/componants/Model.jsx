@@ -8,6 +8,26 @@ function Model(props) {
 
     const [selectedImgIdx, setSelectedImgIdx] = useState(0)
 
+    const whatsappNumber = "923333867934";
+    const handleWhatsAppCheckout = () => {
+        console.log('sending')
+        const productUrl = `${window.location.origin}/collection`;
+        const message = `
+Assalam-o-Alaikum!
+
+I would like to inquire about the following products:
+
+${props.product.name}
+${productUrl}
+
+Please share the details. Thank you!
+    `;
+
+        const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+        window.open(url, '_blank');
+    };
+
     return (
 
         <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -18,7 +38,7 @@ function Model(props) {
 
             <div className="model-img">
 
-                <img src={props.product.images?props.product.images[selectedImgIdx].image_url: props.product.image_url} alt={props.product.name} className='open-img cover preview' />
+                <img src={props.product.images ? props.product.images[selectedImgIdx].image_url : props.product.image_url} alt={props.product.name} className='open-img cover preview' />
 
                 {props.product.images?.length > 1 &&
 
@@ -48,7 +68,7 @@ function Model(props) {
 
             <div className="model-body">
 
-                <h2 className={props.product.metal? 'bar-name': ''}>{props.product.name}</h2>
+                <h2 className={props.product.metal ? 'bar-name' : ''}>{props.product.name}</h2>
                 {props.product.description &&
                     <p className="desc">{props.product.description}</p>
                 }
@@ -121,7 +141,9 @@ function Model(props) {
                                 'Add to cart'
                         }
                     </button>
-                    <a className="btn whatsapp">Ask on WhatsApp</a>
+                    <button className="btn whatsapp" onClick={handleWhatsAppCheckout}>
+                        Ask on WhatsApp
+                    </button>
                 </div>
 
             </div>

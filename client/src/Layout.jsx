@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import react from 'react'
 import Header from './componants/Header.jsx'
-import Hero from './componants/Hero.jsx'
 import Footer from './componants/Footer.jsx'
 import SplashScreen from './componants/Splash.jsx'
 import Cart from './componants/Cart.jsx'
@@ -42,7 +41,6 @@ export default function () {
                 setMenuOpen={setMenuOpen}
             />
             <main>
-                <Hero/>
                 <Outlet context={
                     {
                         addItemInCart,

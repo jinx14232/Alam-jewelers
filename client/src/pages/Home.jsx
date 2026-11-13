@@ -1,12 +1,15 @@
 import react from 'react'
-import Loader from './Loader'
-import { useNavigate, NavLink } from 'react-router-dom';
+import Loader from '../componants/Loader'
+import DetailProductCard from '../componants/DetailProductCard';
+import DetailBarCard from '../componants/DetailBarCard';
+import { NavLink } from 'react-router-dom';
+import Hero from '../componants/Hero';
+
 
 export default function () {
 
     const [recents, setRecents] = react.useState({})
     const [loading, setLoading] = react.useState(true)
-    const navigate = useNavigate()
 
     react.useEffect(() => {
         async function gettInv() {
@@ -14,7 +17,7 @@ export default function () {
             try {
 
                 const response = await fetch(
-                    'http://localhost:5000/inventory?limit=5'
+                    'http://localhost:5000/inventory?limit=3'
                 )
 
                 if (!response.ok) {
@@ -35,10 +38,11 @@ export default function () {
         gettInv()
     }, [])
 
-    console.log(recents)
+    console.log('recents ',recents)
 
     return (
         <>
+            <Hero/>
             <section className="home">
                 <section className="home-section">
                     <h2>Latest Uploads</h2>
@@ -48,46 +52,19 @@ export default function () {
                             {
                                 (recents.bars?.length == 0 &&
                                     recents.products.length == 0) ? <p>No recents upload</p> :
+
                                     <div className="home-grid">
                                         {recents.products?.map((product, id) => (
-                                            <button className="card" key={id}  onClick={() => navigate('/collection')}>
-
-                                                <img src={product.image_url} className='cover' />
-
-                                                <div className="data">
-                                                    <h3
-                                                        style={{ marginBottom: '10px' }}
-                                                    >{product.name}</h3>
-
-                                                    <div className="meta">Price {product.price} -/Rs</div>
-
-
-                                                    <p className="meta">
-                                                        {product.audience} · {product.category}
-                                                    </p>
-                                                    <p className="meta">
-                                                        {product.metals}
-                                                    </p>
-
-                                                </div>
-
-                                            </button>
+                                            <DetailProductCard
+                                                key={id}
+                                                product={product}
+                                            />
                                         ))}
-                                        {recents.bars?.map((product, id) => (
-                                            <button className="card" key={id}  onClick={() => navigate('/bars')}>
-
-                                                <img src={product.image_url} className='cover' />
-
-                                                <div className="data">
-                                                    <h3
-                                                        className='bar-name'
-                                                    >{product.name}</h3>
-
-                                                    <div className="meta">Price {product.price} -/Rs</div>
-
-                                                </div>
-
-                                            </button>
+                                        {recents.bars?.map((bar, id) => (
+                                            <DetailBarCard
+                                                key={id}
+                                                bar={bar}
+                                            />
                                         ))}
 
                                     </div>
@@ -101,10 +78,11 @@ export default function () {
                 <section className="home-section">
                     <div className="poster-con">
                         <div className="content">
-                            <h1>Finest Collection</h1>
-                            <p>Explore out top rated collection with ratings</p>
-                            <NavLink to='/collection' className='btn'>
-                                Explore
+
+                            <NavLink to='/collection'>
+                                <h1>Finest Collection</h1>
+                                <p>Explore out top rated collection with ratings</p>
+                                <div className="btn">Explore</div>
                             </NavLink>
                         </div>
                         <video autoPlay
@@ -122,24 +100,24 @@ export default function () {
                     </div>
                     <div className="wrap">
                         <div className="box">
-                             <NavLink to='/collection'>
+                            <NavLink to='/collection'>
                                 Men
                             </NavLink>
                             <img src="../public/men.jpeg" alt="image" />
-                           
+
                         </div>
                         <div className="box">
                             <NavLink to='/collection'>
                                 Women
                             </NavLink>
                             <img src="../public/women.jpeg" alt="image" />
-                            
+
                         </div>
                         <div className="box">
                             <NavLink to='/collection'>
                                 New Born
                             </NavLink>
-                            <img src="../public/baby.jpeg" alt="image" />   
+                            <img src="../public/baby.jpeg" alt="image" />
                         </div>
                     </div>
 
@@ -148,10 +126,10 @@ export default function () {
                 <section className="home-section">
                     <div className="poster-con">
                         <div className="content">
-                            <h1>Golden Silver Bars</h1>
-                            <p>Take a look at Bars collection.</p>
-                           <NavLink to='/bars' className='btn'>
-                                Bars
+                            <NavLink to='/bars'>
+                                <h1>Golden Silver Bars</h1>
+                                <p>Take a look at Bars collection.</p>
+                                <div className="btn">Bars</div>
                             </NavLink>
                         </div>
                         <video autoPlay

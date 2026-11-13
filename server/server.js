@@ -287,7 +287,13 @@ app.get('/metals', (req, res) => {
 
 app.get('/bars', (req, res) => {
     const bars = db.prepare(`
-        SELECT * FROM bars
+        SELECT 
+            id, 
+            name, 
+            price,  
+            image_url, 
+            metal
+        FROM bars
     `).all()
     res.send(bars)
 })
@@ -325,7 +331,6 @@ function getAllProducts(limit) {
 
     return products
 
-
 }
 
 function getAllBars(limit) {
@@ -335,6 +340,7 @@ function getAllBars(limit) {
                 name,
                 image_url,
                 price,
+                metal,
                 created_at AS time
             FROM bars
             ORDER BY id DESC
@@ -399,64 +405,124 @@ app.get('/inventory', (req, res) => {
 
 })
 
+app.get('/product/:id', (req, res) => {
+
+    try {
+        const { id } = req.params;
+
+        // Get the product
+        const product = db.prepare(`
+            SELECT 
+                p.name,
+                p.description,
+                p.gender,
+                p.price,
+                c.name AS category
+            FROM products p
+            JOIN categories c ON p.category_id = c.id
+            WHERE p.id = ?
+        `).get(id);
+
+        // Check if product exists
+        if (!product) {
+            return res.status(404).json({
+                message: 'Product not found'
+            });
+        }
+
+        // Get product images
+        const images = db.prepare(`
+            SELECT image_url
+            FROM product_images
+            WHERE product_id = ?
+            ORDER BY id ASC
+        `).all(id);
+
+        // Get product metals
+        const metals = db.prepare(`
+            SELECT
+                m.id,
+                m.name,
+                pm.details
+            FROM product_metal pm
+            JOIN metals m ON pm.metal_id = m.id
+            WHERE pm.product_id = ?
+        `).all(id);
+
+        // Attach related data
+        const result = {
+            ...product,
+            images,
+            metals: metals.map(metal => ({
+                id: metal.id,
+                name: metal.name,
+                details: JSON.parse(metal.details)
+            }))
+        };
+
+        res.json(result);
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: 'Failed to retrieve product'
+        });
+    }
+
+});
+
+//for cards--------------------
+
 app.get('/products', (req, res) => {
 
     try {
         const products = db.prepare(`
-            SELECT 
-                p.*,
-                c.name AS category
+            SELECT
+                p.id,
+                p.name,
+                p.price,
+                p.gender,
+                p.category_id,
+
+                (
+                    SELECT pi.image_url
+                    FROM product_images pi
+                    WHERE pi.product_id = p.id
+                    ORDER BY pi.is_primary DESC
+                    LIMIT 1
+                ) AS image_url
+
             FROM products p
             JOIN categories c
                 ON p.category_id = c.id
-            ORDER BY p.id DESC
-        `).all()
 
-        const images = db.prepare(`
-            SELECT *
-            FROM product_images
-        `).all()
+            ORDER BY p.id DESC
+        `).all();
 
         const metals = db.prepare(`
             SELECT
-            pm.product_id,
-            m.id,
-            m.name,
-            pm.details
-            FROM product_metal pm
-            JOIN metals m
-            ON pm.metal_id = m.id
+                product_id,
+                metal_id
+            FROM product_metal
         `).all();
 
-        // Group images by product ID
-        const imagesByProduct = new Map()
+        const metal_product = new Map();
 
-        images.forEach(image => {
-            if (!imagesByProduct.has(image.product_id)) {
-                imagesByProduct.set(image.product_id, [])
+        metals.forEach(metal => {
+            if (!metal_product.has(metal.product_id)) {
+                metal_product.set(metal.product_id, []);
             }
 
-            imagesByProduct.get(image.product_id).push(image)
-        })
+            metal_product.get(metal.product_id).push(metal.metal_id);
+        });
 
-        const metal_product = new Map()
-        metals.forEach(metal => {
-            if (!metal_product.has(metal.product_id))
-                metal_product.set(metal.product_id, [])
-
-            metal_product.get(metal.product_id).push({
-                id: metal.id,
-                name: metal.name,
-                details: JSON.parse(metal.details)
-            })
-        })
-
-        // Attach images to their respective products
         const result = products.map(product => ({
             ...product,
-            metals: metal_product.get(product.id) || [],
-            images: imagesByProduct.get(product.id) || []
-        }))
+            metals: metal_product.get(product.id) || []
+        }));
+
+        console.log('products ', result)
 
         res.json(result)
 
