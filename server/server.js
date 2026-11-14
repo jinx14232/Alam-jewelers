@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://0mlxmjxd-5174.inc1.devtunnels.ms', 'https://0mlxmjxd-5173.inc1.devtunnels.ms', 'https://0mlxmjxd-5173.inc1.devtunnels.ms/']
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://0mlxmjxd-5174.inc1.devtunnels.ms', 'https://0mlxmjxd-5173.inc1.devtunnels.ms', 'https://0mlxmjxd-5173.inc1.devtunnels.ms']
 }))
 const upload = multer({
     storage: multer.memoryStorage()
