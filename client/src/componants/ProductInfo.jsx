@@ -1,5 +1,33 @@
+import { useOutletContext } from 'react-router-dom'
 
-export default function ProductInfo({ product, onAddToCart }) {
+export default function ProductInfo({ product }) {
+
+    const {
+        addItemInCart,
+        removeItemInCart,
+        cartItems
+    } = useOutletContext()
+
+    const isInCart = cartItems.some(
+        item => item.id === product.id
+    )
+
+    const whatsappNumber = "923135452115"
+    const handleWhatsAppCheckout = () => {
+        console.log('sending')
+        const productUrl = `${window.location.origin}/product/${product.id}`;
+        const message = `
+                Assalam-o-Alaikum!      
+                I would like to inquire about the following products:
+                ${product.name}
+                ${productUrl}
+                Please share the details. Thank you!
+            `
+
+        const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
+        window.open(url, '_blank')
+
+    };
 
     return (
         <div className="product-info">
@@ -55,14 +83,24 @@ export default function ProductInfo({ product, onAddToCart }) {
                 <div className="buttons">
                     <button
                         className="action-btn add-cart"
-                        onClick={() => onAddToCart(product)}
+                        onClick={
+                            () => {
+                                isInCart ?
+                                    removeItemInCart(product.id) :
+                                    addItemInCart(product)
+                            }
+                        }
                     >
-                        Add to Cart
+                        {
+                            isInCart ?
+                                'Remove from cart' :
+                                'Add to cart'
+                        }
                     </button>
 
                     <button
                         className="action-btn whatsapp"
-                        onClick={() => onAddToCart(product)}
+                        onClick={handleWhatsAppCheckout}
                     >
                         Ask On Whatsapp
                     </button>

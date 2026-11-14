@@ -8,7 +8,7 @@ import Collection from './pages/Collection.jsx'
 import Bars from './pages/Bars.jsx'
 import LiveRates from './componants/LiveRates.jsx'
 import Home from './pages/Home.jsx'
-import ProductDetail from './componants/ProductDetail.jsx'
+import ProductDetail from './pages/ProductDetail.jsx'
 import BarDetail from './componants/BarDetail.jsx'
 
 function App() {

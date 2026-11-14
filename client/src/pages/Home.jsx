@@ -100,21 +100,21 @@ export default function () {
                     </div>
                     <div className="wrap">
                         <div className="box">
-                            <NavLink to='/collection'>
+                            <NavLink to='/collection?tab=Men'>
                                 Men
                             </NavLink>
                             <img src="../public/men.jpeg" alt="image" />
 
                         </div>
                         <div className="box">
-                            <NavLink to='/collection'>
+                            <NavLink to='/collection?tab=Women'>
                                 Women
                             </NavLink>
                             <img src="../public/women.jpeg" alt="image" />
 
                         </div>
                         <div className="box">
-                            <NavLink to='/collection'>
+                            <NavLink to='/collection?tab=New Born'>
                                 New Born
                             </NavLink>
                             <img src="../public/baby.jpeg" alt="image" />

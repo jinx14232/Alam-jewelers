@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import ProductGallery from './ProductGallery.jsx';
-import ProductInfo from './ProductInfo.jsx';
+import ProductGallery from '../componants/ProductGallery.jsx';
+import ProductInfo from '../componants/ProductInfo.jsx';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Loader from './Loader.jsx';
+import Loader from '../componants/Loader.jsx';
+
 
 export default function ProductDetail() {
 
@@ -39,17 +40,31 @@ export default function ProductDetail() {
 
     }, [id])
 
+    const audience = {
+        women: 'Women',
+        men: 'Men',
+        newBorn: 'New Born'
+    }
+
     return (
         <section className="product-details">
 
             <div className="breadcrumbs">
+
                 <Link to="/">Home</Link>
                 <span>/</span>
-                <Link to="/collection">Shop</Link>
+
+                <Link to={`/collection?tab=${audience[product.gender]}`}>
+                    {audience[product.gender]}
+                </Link>
                 <span>/</span>
-                <span>Bangles</span>
-                <span>/</span>
-                <span className="current">Bangles 001</span>
+
+                <Link to={`/collection?tab=${audience[product.gender]}`}>
+                    {product.category}
+                 </Link>
+                 <span>/</span>
+
+                <span className="current">{product.name}</span>
             </div>
 
             <div className="product-layout">
@@ -62,7 +77,6 @@ export default function ProductDetail() {
 
                         <ProductInfo
                             product={product}
-                            onAddToCart={() => console.log('cart')}
                         />
                     </>
                 }

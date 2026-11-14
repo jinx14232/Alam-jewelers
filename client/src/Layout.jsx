@@ -5,11 +5,17 @@ import Footer from './componants/Footer.jsx'
 import SplashScreen from './componants/Splash.jsx'
 import Cart from './componants/Cart.jsx'
 import Sidebar from './componants/Sidebar.jsx'
+import { useEffect, useState } from 'react'
 
 export default function () {
 
     const [showCart, setShowCart] = react.useState(false)
-    const [cartItems, setCartItems] = react.useState([])
+
+    const [cartItems, setCartItems] = useState(() => {
+        const savedCart = localStorage.getItem('cart');
+
+        return savedCart ? JSON.parse(savedCart) : [];
+    })
 
     function addItemInCart(product) {
 
@@ -20,6 +26,7 @@ export default function () {
         setShowCart(true)
 
     }
+
     function removeItemInCart(productID) {
 
         setCartItems(prevItems =>
@@ -32,6 +39,9 @@ export default function () {
 
     const [menuOpen, setMenuOpen] = react.useState(false)
 
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+    }, [cartItems])
 
     return (
         <>
@@ -47,7 +57,7 @@ export default function () {
                         removeItemInCart,
                         cartItems
                     }
-                }/>
+                } />
             </main>
 
             <Footer />

@@ -413,6 +413,7 @@ app.get('/product/:id', (req, res) => {
         // Get the product
         const product = db.prepare(`
             SELECT 
+                p.id,
                 p.name,
                 p.description,
                 p.gender,

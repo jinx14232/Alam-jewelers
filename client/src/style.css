@@ -223,7 +223,7 @@ button {
 .markers {
     position: absolute;
     bottom: 10px;
-
+    left: 10px;
     display: flex;
     gap: 10px;
 
@@ -383,12 +383,12 @@ button {
         .grid {
             grid-auto-flow: column;
             grid-auto-columns: 210px;
-            /* grid-template-columns: unset; */
             overflow-x: auto;
             overflow-y: hidden;
             scroll-behavior: smooth;
             scrollbar-width: thin;
             scroll-snap-type: x proximity;
+            scrollbar-color: var(--maroon) transparent;
 
             * {
                 scroll-snap-align: start;
@@ -470,6 +470,7 @@ button {
         width: 80%;
         min-height: 150px;
         height: auto;
+        margin: 10px 0;
     }
 
 }
@@ -527,6 +528,7 @@ button {
         }
 
         .item {
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -606,7 +608,7 @@ button {
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scroll-snap-type: x proximity;
-
+    scrollbar-color: var(--mute) transparent;
 
 }
 
@@ -805,12 +807,15 @@ button {
 }
 
 .gallery-primary {
+    position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 12px;
     background: #eee7d9;
     cursor: pointer;
+    border: 0;
+    padding: 0;
 }
 
 .gallery-primary img {
@@ -821,8 +826,26 @@ button {
     display: block;
     transition: 0.3s ease;
 }
-.gallery-primary:hover img{
-    transform: scale(1.1);
+.gallery-primary:hover img {
+    transform: scale(1.03);
+}
+
+.gallery-zoom-hint {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 65%);
+    color: #fff;
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.gallery-primary:hover .gallery-zoom-hint,
+.gallery-primary:focus-visible .gallery-zoom-hint {
+    opacity: 1;
 }
 
 .gallery-more {
@@ -867,8 +890,97 @@ button {
     display: block;
 }
 
+.gallery-viewer {
+    position: fixed;
+    z-index: 20;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgb(0 0 0 / 82%);
+}
+
+.gallery-viewer-content {
+    position: relative;
+    display: flex;
+    max-width: min(94vw, 1100px);
+    max-height: 94vh;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+/* .gallery-viewer-close {
+    position: absolute;
+    z-index: 1;
+    top: -12px;
+    right: -12px;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: #222;
+    cursor: pointer;
+    font-size: 1.8rem;
+    line-height: 1;
+} */
+
+.gallery-viewer-image {
+    max-width: 90vw;
+    max-height: 78vh;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--maroon) transparent;
+    border-radius: 8px;
+    background: #eee7d9;
+    cursor: zoom-in;
+}
+
+.gallery-viewer-image img {
+    display: block;
+    max-width: 90vw;
+    max-height: 78vh;
+    object-fit: contain;
+    transform-origin: center;
+    transition: transform 0.2s ease;
+}
+
+.gallery-viewer-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+}
+
+.gallery-viewer-controls button {
+    min-width: 36px;
+    min-height: 36px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--maroon);
+    color: var(--card);
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    font-family: 'Jost';
+}
+
+.gallery-viewer-controls .reset {
+    min-width: 70px;
+    min-height: 36px;
+    border-radius: 10px;
+    
+}
+
+
+.gallery-viewer-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 .gallery-thumbnail:hover {
-    border-color: #c29534;
+    border-color: var(--gold);
 }
 
 /* Mobile */
@@ -1128,6 +1240,10 @@ button {
 
     .hero-section {
         min-height: 460px;
+        margin-top: 65px;
+    }
+
+    .product-details{
         margin-top: 65px;
     }
 

@@ -2,14 +2,17 @@ import Tabs from './Tabs.jsx'
 import react from 'react'
 import ProductCatelog from './ProductCatelog.jsx'
 import { tabsText } from '../Utility.js'
+import { useSearchParams } from 'react-router-dom'
 
-function ProductShop(props) {
+function ProductShop() {
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
     //tabs
     const TABS = ['Women', 'Men', 'New Born']
-    const [currentTab, setCurrentTab] = react.useState(tabsText[TABS[0]])
+    const currentTab = searchParams.get('tab') || tabsText[TABS[0]]
+    console.log('current tab' ,currentTab)
 
-    
     return (
         <section className='shop'>
 
@@ -19,16 +22,14 @@ function ProductShop(props) {
                 handleClick={(e) => {
                     if (currentTab == tabsText[e.currentTarget.innerText])
                         return
-                    setCurrentTab(tabsText[e.currentTarget.innerText])
+                    console.log('setting tab ', e.currentTarget.innerText, tabsText[e.currentTarget.innerText])
+                    setSearchParams({ tab: tabsText[e.currentTarget.innerText]})
                 }
                 }
             />
 
             <ProductCatelog
                 currentTab={currentTab}
-                onAddItem={props.onAddItem}
-                removeItem={props.removeItem}
-                cartItems={props.cartItems}
             />
 
         </section>

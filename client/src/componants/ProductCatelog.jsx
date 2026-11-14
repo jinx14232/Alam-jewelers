@@ -158,6 +158,7 @@ function ProductCatelog(props) {
                                             <Card
                                                 key={idx}
                                                 product={p}
+            
                                             />
                                         )}
                                     </div>
