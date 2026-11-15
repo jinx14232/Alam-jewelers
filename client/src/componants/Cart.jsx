@@ -1,18 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import { titleCase } from "../Utility"
 function Cart(props) {
 
     const navigate = useNavigate()
-    const whatsappNumber = "923333867934";
+    const whatsappNumber = "923333867934"
     const generateWhatsAppMessage = () => {
 
         const items = props.cartItems.map((item, index) => {
 
-            return `${index + 1}. ${item.name}
+            if (item.gender)
+                return `${index + 1}. ${item.name}
         Collection: ${item.gender} Category: ${item.category} 
         Price: Rs. ${item.price}
         url: ${window.location.origin}/product/${item.id}     `
-            }).join('\n');
+            else
+                return `${index + 1}. ${item.name} 
+        Price: Rs. ${item.price}
+        url: ${window.location.origin}/bar/${item.id}     `
+        }).join('\n');
 
         const message = `Assalam-o-Alaikum! 
 I would like to inquire about the following products:
@@ -25,7 +30,7 @@ Thank you!
 Alam Jewelers`;
 
         return encodeURIComponent(message);
-    };
+    }
 
 
     return (
@@ -48,17 +53,17 @@ Alam Jewelers`;
 
                     <div className="item" key={i.id + idx} onClick={
                         () => {
-                                props.handleCloseCart(); 
-                                navigate(i.metal? `/bar/${i.id}`: `/product/${i.id}`)
-                            }
-                        }>
+                            props.handleCloseCart();
+                            navigate(i.metal ? `/bar/${i.id}` : `/product/${i.id}`)
+                        }
+                    }>
 
-                        <img src={i.images?i.images[0].image_url: i.image_url} alt={i.name} className="cover img" />
+                        <img src={i.images ? i.images[0].image_url : i.image_url} alt={i.name} className="cover img" />
 
                         <div>
                             <strong>{titleCase(i.name)}</strong>
                             <div className="meta">{i.price} -/Rs</div>
-                            <button className="remove-item" onClick={(e) => {e.stopPropagation(); props.removeItem(i.id)}}>Remove</button>
+                            <button className="remove-item" onClick={(e) => { e.stopPropagation(); props.removeItem(i.id) }}>Remove</button>
                         </div>
                     </div>
 
