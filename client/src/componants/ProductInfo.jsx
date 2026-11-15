@@ -9,7 +9,7 @@ export default function ProductInfo({ product }) {
     } = useOutletContext()
 
     const isInCart = cartItems.some(
-        item => item.id === product.id
+        item => item.id === product.id && item.name == product.name
     )
 
     const whatsappNumber = "923135452115"

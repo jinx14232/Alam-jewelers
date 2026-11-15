@@ -2,12 +2,15 @@ import Tabs from './Tabs.jsx'
 import react from 'react'
 import BarCatelog from './BarCatelog.jsx'
 import { tabsText } from '../Utility.js'
+import { useSearchParams } from 'react-router-dom'
 
-function BarShop(props) {
+function BarShop() {
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
     //tabs
     const TABS = ['Gold', 'Silver']
-    const [currentTab, setCurrentTab] = react.useState(tabsText[TABS[0]])
+    const currentTab = searchParams.get('tab') || tabsText[TABS[0]]
 
     return (
         <section className='shop'>
@@ -18,16 +21,13 @@ function BarShop(props) {
                 handleClick={(e) => {
                     if (currentTab == tabsText[e.currentTarget.innerText])
                         return
-                    setCurrentTab(tabsText[e.currentTarget.innerText])
+                    setSearchParams({ tab: tabsText[e.currentTarget.innerText]})
                 }
                 }
             />
 
             <BarCatelog
                 currentTab={currentTab}
-                onAddItem={props.onAddItem}
-                removeItem={props.removeItem}
-                cartItems={props.cartItems}
             />
 
         </section>

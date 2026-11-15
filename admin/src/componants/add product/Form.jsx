@@ -52,13 +52,13 @@ export default function ({ metals }) {
         async function getCategories() {
             try {
 
-                const responce = await fetch('http://localhost:5000/categories', {
+                const responce = await fetch('http://localhost:5000/rawCategories', {
                     method: 'GET',
                 })
 
                 if (!responce.ok) {
                     console.log('responce is incorrect')
-                    return {}
+                    return 
                 }
 
                 const categoriesData = await responce.json()

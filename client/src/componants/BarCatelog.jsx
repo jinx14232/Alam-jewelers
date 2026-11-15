@@ -2,10 +2,10 @@ import Card from './Card.jsx'
 import Model from './Model.jsx'
 import Loader from './Loader.jsx'
 import React from 'react'
+import { apiFetch } from '../api.js'
 
-function BarCatelog(props) {
+function BarCatelog({currentTab}) {
 
-    const [openedItem, setOpenedItem] = React.useState(null)
     //loading
     const [loadingBars, setLoadingBars] = React.useState(true)
 
@@ -15,9 +15,7 @@ function BarCatelog(props) {
     React.useEffect(() => {
         async function getBars() {
             try {
-                const response = await fetch(
-                    'http://localhost:5000/bars'
-                )
+                const response = await apiFetch('/bars')
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch bars')
@@ -38,8 +36,7 @@ function BarCatelog(props) {
         getBars()
     }, [])
 
-    console.log('filtering bars')
-    const filteredBars = bars.filter(bar => bar.metal == props.currentTab)
+    const filteredBars = bars.filter(bar => bar.metal == currentTab)
 
     return (
         <>
@@ -59,6 +56,7 @@ function BarCatelog(props) {
                                     <Card
                                         key={idx}
                                         product={bar}
+                                        link= {`/bar/${bar.id}`}
                                     />
                                 )}
                             </div>
@@ -71,21 +69,6 @@ function BarCatelog(props) {
                 </section>
 
             </section>
-
-            {/* {openedItem != null &&
-
-                <>
-                    <div className="ov" onClick={() => setOpenedItem(null)}>
-                        <Model
-                            product={openedItem}
-                            onAddItem={props.onAddItem}
-                            removeItem={props.removeItem}
-                            onClose={() => setOpenedItem(null)}
-                            cartItems={props.cartItems}
-                        />
-                    </div>
-                </>
-            } */}
 
         </>
 

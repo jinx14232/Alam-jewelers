@@ -4,6 +4,7 @@ import DetailProductCard from '../componants/DetailProductCard';
 import DetailBarCard from '../componants/DetailBarCard';
 import { NavLink } from 'react-router-dom';
 import Hero from '../componants/Hero';
+import { apiFetch } from '../api';
 
 
 export default function () {
@@ -16,9 +17,7 @@ export default function () {
 
             try {
 
-                const response = await fetch(
-                    'http://localhost:5000/inventory?limit=3'
-                )
+                const response = await apiFetch('/inventory?limit=3')
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch products')
@@ -58,6 +57,7 @@ export default function () {
                                             <DetailProductCard
                                                 key={id}
                                                 product={product}
+
                                             />
                                         ))}
                                         {recents.bars?.map((bar, id) => (
@@ -100,21 +100,21 @@ export default function () {
                     </div>
                     <div className="wrap">
                         <div className="box">
-                            <NavLink to='/collection?tab=Men'>
+                            <NavLink to='/collection?tab=men'>
                                 Men
                             </NavLink>
                             <img src="../public/men.jpeg" alt="image" />
 
                         </div>
                         <div className="box">
-                            <NavLink to='/collection?tab=Women'>
+                            <NavLink to='/collection?tab=women'>
                                 Women
                             </NavLink>
                             <img src="../public/women.jpeg" alt="image" />
 
                         </div>
                         <div className="box">
-                            <NavLink to='/collection?tab=New Born'>
+                            <NavLink to='/collection?tab=newBorn'>
                                 New Born
                             </NavLink>
                             <img src="../public/baby.jpeg" alt="image" />

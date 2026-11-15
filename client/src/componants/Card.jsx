@@ -5,7 +5,7 @@ function Card(props) {
 
     return (
 
-        <Link className="card" to={`/product/${props.product.id}`}>
+        <Link className="card" to={props.link}>
             
             <img src={props.product.image_url} alt={props.product.name} className='cover' /> 
 

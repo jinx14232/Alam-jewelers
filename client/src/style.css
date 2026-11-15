@@ -377,7 +377,7 @@ button {
 }
 
 @media (width < 600px) {
-
+    
     .grid-wrap {
 
         .grid {
@@ -738,7 +738,7 @@ button {
     margin-top: 125px;
     width: 100%;
     min-height: 100vh;
-    padding: 25px 4%;
+    padding: 35px 4%;
     background: var(--card);
     color: var(--maroon);
 }
@@ -759,6 +759,7 @@ button {
     text-decoration: none;
     color: inherit;
     transition: color 0.2s;
+    text-transform: capitalize;
 }
 
 .breadcrumbs a:hover {

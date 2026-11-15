@@ -3,7 +3,6 @@ function MobileNav() {
     return (
         <aside className="mobile-navbar">
 
-
             <Navigation
                 class="mobile-nav"
             />

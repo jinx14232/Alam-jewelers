@@ -3,6 +3,7 @@ import Model from './Model.jsx'
 import Loader from './Loader.jsx'
 import React from 'react'
 import Filter from './Filter.jsx'
+import { apiFetch } from '../api.js'
 
 function ProductCatelog(props) {
 
@@ -17,9 +18,8 @@ function ProductCatelog(props) {
     React.useEffect(() => {
         async function getCategory() {
             try {
-                const response = await fetch(
-                    `http://localhost:5000/genderCategories?gender=${props.currentTab}`
-                )
+                
+                const response = await apiFetch(`/genderCategories?gender=${props.currentTab}`)
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch products')
@@ -49,7 +49,8 @@ function ProductCatelog(props) {
 
         async function getMetals() {
             try {
-                const responce = await fetch('http://localhost:5000/metals')
+                const responce = await apiFetch('/metals')
+
                 const data = await responce.json()
                 // console.log('all metals ', data)
                 setMetals(data) // [{name, id}, ..]
@@ -69,9 +70,7 @@ function ProductCatelog(props) {
     React.useEffect(() => {
         async function getProducts() {
             try {
-                const response = await fetch(
-                    'http://localhost:5000/products'
-                )
+                const response = await apiFetch('/products')
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch products')
@@ -158,7 +157,8 @@ function ProductCatelog(props) {
                                             <Card
                                                 key={idx}
                                                 product={p}
-            
+                                                link= {`/product/${p.id}`}
+        
                                             />
                                         )}
                                     </div>

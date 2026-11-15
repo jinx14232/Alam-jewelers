@@ -5,7 +5,7 @@ export default function ({ bar }) {
 
 
     return (
-        <Link className="card" to={`/product/${bar.id}`}>
+        <Link className="card" to={`/bar/${bar.id}`}>
 
             <img src={bar.image_url} className='cover' />
 

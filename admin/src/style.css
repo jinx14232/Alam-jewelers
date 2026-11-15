@@ -552,6 +552,13 @@ html {
         font-family: 'Jost';
         text-transform: capitalize;
     }
+    td button{
+        background: none;
+        border: none;
+        text-decoration: underline;
+        color: var(--muted);
+        cursor: pointer;
+    }
 }
 
 /* bars */

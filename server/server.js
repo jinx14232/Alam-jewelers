@@ -11,7 +11,9 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://0mlxmjxd-5174.inc1.devtunnels.ms', 'https://0mlxmjxd-5173.inc1.devtunnels.ms', 'https://0mlxmjxd-5173.inc1.devtunnels.ms']
+    origin: ['http://localhost:5173',
+        'http://localhost:5174',
+        'https://0mlxmjxd-5173.inc1.devtunnels.ms']
 }))
 const upload = multer({
     storage: multer.memoryStorage()
@@ -130,7 +132,7 @@ function insertData(product, metals, imageData) {
 //-------------------------------------------------
 
 
-app.get('/categories', (req, res) => {
+app.get('/rawCategories', (req, res) => {
 
     const categories = db.prepare(`
         SELECT * FROM categories
@@ -224,7 +226,38 @@ app.post('/categories', (req, res) => {
             message: 'Something went wrong'
         });
     }
-});
+})
+
+app.delete('/categories/:id', (req, res) => {
+
+    const { id } = req.params
+
+    try {
+        const result = db.prepare(`
+            DELETE FROM categories WHERE id = ?
+        `).run(id);
+
+        res.status(201).json({
+            message: 'Category deleted successfully',
+            id: result.lastInsertRowid
+        });
+
+    } catch (err) {
+
+        if (result.changes === 0) {
+            return res.status(404).json({
+                message: 'category not found'
+            });
+        }
+
+        console.error(err);
+
+        res.status(500).json({
+            message: 'Something went wrong'
+        });
+    }
+})
+
 
 app.delete('/product/:id', async (req, res) => {
     const { id } = req.params
@@ -298,8 +331,43 @@ app.get('/bars', (req, res) => {
     res.send(bars)
 })
 
-function getAllProducts(limit) {
+app.get('/bar/:id', (req, res) => {
+    
+    try {
+        const { id } = req.params;
 
+        // Get the product
+        const bar = db.prepare(`
+            SELECT 
+                id, name, metal, weight,
+                weight_unit, brand, fineness,
+                karat, price, image_url
+            FROM bars
+            WHERE id = ?
+        `).get(id);
+
+        // Check if product exists
+        if (!bar) {
+            return res.status(404).json({
+                message: 'Bar not found'
+            });
+        }
+
+        res.json(bar);
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: 'Failed to retrieve bar'
+        });
+    }
+
+})
+
+
+
+function getAllProducts(limit) {
 
     const products = db.prepare(`
         SELECT
@@ -351,9 +419,8 @@ function getAllBars(limit) {
 
 }
 
-app.get('/allProducts', (req, res) => {
+app.get('/allProducts', (_, res) => {
     try {
-
         const products = getAllProducts(-1)
         res.json({ products })
 

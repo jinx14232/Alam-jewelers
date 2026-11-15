@@ -27,12 +27,10 @@ export default function () {
                         body: JSON.stringify(categories)
                     }
                 );
-
-                const data = await res.json();
-
                 if (!res.ok) {
                     throw new Error(data.message);
                 }
+                const data = await res.json();
 
                 alert(data.message);
 
@@ -50,6 +48,34 @@ export default function () {
 
     }
 
+    async function deleteCat(id) {
+        setLoading(true)
+        
+        try {
+            const res = await fetch(
+                `http://localhost:5000/categories/${id}`,
+                {
+                    method: 'DELETE'
+                }
+            )
+
+            if (!res.ok) {
+                throw new Error(data.message);
+            }
+            const data = await res.json()
+            alert(data.message);
+
+            // Refresh categories
+            window.location.reload()
+
+        } catch (err) {
+            alert(err.message);
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
     const [loading, setLoading] = react.useState(true)
     const [currentCategories, setCurrentCategories] = react.useState({})
 
@@ -57,7 +83,7 @@ export default function () {
         async function getCategory() {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/categories`
+                    `http://localhost:5000/rawCategories`
                 )
 
                 if (!response.ok) {
@@ -161,7 +187,7 @@ export default function () {
                                             {cats.map(cat => (
                                                 <tr key={cat.id}>
                                                     <td>{cat.name}</td>
-
+                                                    <td><button onClick={() => deleteCat(cat.id)} >delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

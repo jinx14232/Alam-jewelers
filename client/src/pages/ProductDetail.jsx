@@ -4,7 +4,7 @@ import ProductInfo from '../componants/ProductInfo.jsx';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from '../componants/Loader.jsx';
-
+import { apiFetch } from '../api.js';
 
 export default function ProductDetail() {
 
@@ -16,9 +16,8 @@ export default function ProductDetail() {
 
         async function getProduct() {
             try {
-                const response = await fetch(
-                    `http://localhost:5000/product/${id}`
-                )
+                
+                const response = await apiFetch(`/product/${id}`)
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch bars')
@@ -54,12 +53,12 @@ export default function ProductDetail() {
                 <Link to="/">Home</Link>
                 <span>/</span>
 
-                <Link to={`/collection?tab=${audience[product.gender]}`}>
+                <Link to={`/collection?tab=${product.gender}`}>
                     {audience[product.gender]}
                 </Link>
                 <span>/</span>
 
-                <Link to={`/collection?tab=${audience[product.gender]}`}>
+                <Link to={`/collection?tab=${product.gender}`}>
                     {product.category}
                  </Link>
                  <span>/</span>

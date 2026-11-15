@@ -147,9 +147,6 @@ export default function () {
                     <Inventory
                         products={products}
                         bars={bars}
-                        onViewAll={(type) => {
-                            // Navigate to the relevant inventory page
-                        }}
                         setTracker={setTracker}
                     />
                     : <Loader />}

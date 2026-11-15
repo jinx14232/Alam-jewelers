@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Loader from './Loader';
 import {NavLink} from 'react-router-dom'
 
-function Inventory({ products, bars, onViewAll, setTracker }) {
+function Inventory({ products, bars, setTracker }) {
 
     const [activeTab, setActiveTab] = useState('products');
     const [loading, setLoading] = useState(false)

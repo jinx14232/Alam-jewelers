@@ -46,9 +46,14 @@ Alam Jewelers`;
 
                 {props.cartItems.map((i, idx) => (
 
-                    <div className="item" key={i.id + idx} onClick={() => {props.handleCloseCart(); navigate(`/product/${i.id}`)}}>
+                    <div className="item" key={i.id + idx} onClick={
+                        () => {
+                                props.handleCloseCart(); 
+                                navigate(i.metal? `/bar/${i.id}`: `/product/${i.id}`)
+                            }
+                        }>
 
-                        <img src={i.images[0].image_url} alt={i.name} className="cover img" />
+                        <img src={i.images?i.images[0].image_url: i.image_url} alt={i.name} className="cover img" />
 
                         <div>
                             <strong>{titleCase(i.name)}</strong>
