@@ -4,6 +4,7 @@ import cors from 'cors'
 import multer from 'multer'
 import { uploadImage, deleteImage } from './utils/uploadImage.js'
 import db from './config/db.js'
+import { getGoldRates } from './getRates.js'
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -21,6 +22,19 @@ const upload = multer({
 
 app.get('/', (req, res) => {
     res.send(`<h1>Server</>`)
+})
+
+
+app.get('/goldRates', async (req, res) => {
+    try {
+        const rates = await getGoldRates();
+        res.json(rates);
+    } catch (error) {
+        console.error('Gold rates error:', error.message);
+        res.status(500).json({
+            message: 'Unable to fetch gold rates'
+        });
+    }
 })
 
 //add products and bar----------------------------

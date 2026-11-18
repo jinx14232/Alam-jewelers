@@ -21,15 +21,12 @@ function Cart(props) {
 
         const message = `Assalam-o-Alaikum! 
 I would like to inquire about the following products:
-
 ${items}
-
 Please provide further details about availability and ordering.
-
 Thank you!
-Alam Jewelers`;
+Alam Jewelers`
 
-        return encodeURIComponent(message);
+        return encodeURIComponent(message)
     }
 
 
@@ -91,4 +88,5 @@ Alam Jewelers`;
         </section>
     )
 }
+
 export default Cart
