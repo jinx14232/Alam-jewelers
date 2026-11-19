@@ -17,7 +17,7 @@ export default function ProductDetail() {
         async function getProduct() {
             try {
                 
-                const response = await apiFetch(`/product/${id}`)
+                const response = await apiFetch(`/client/product/${id}`)
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch bars')
@@ -63,7 +63,7 @@ export default function ProductDetail() {
                  </Link>
                  <span>/</span>
 
-                <span className="current">{product.name}</span>
+                <span className="current">{product.code}</span>
             </div>
 
             <div className="product-layout">
@@ -83,5 +83,5 @@ export default function ProductDetail() {
             </div>
 
         </section>
-    );
+    )
 }

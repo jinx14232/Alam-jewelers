@@ -72,8 +72,8 @@ export default function MaterialInfo({ form, setForm, metals, selectedMetals, ch
 
                 {selectedMetals.map((metal, index) => (
                     <section key={index} className="form-section">
-                        <h2 className="partition sub-heading" >{metal.name} Details & Pricing</h2>
-                        <p style={{color: "var(--muted)"}}>Write exact words you want in field and value (purtity: 21k) etc.</p>
+                        <h2 className="partition sub-heading" >{metal.name} Details</h2>
+                        <p style={{color: "var(--muted)"}}>Write exact words you want in field and value (purtity: 21k) etc. <br /> This information will be show as it is to client site</p>
 
                         {
                             form.map((metalInfo, metalIdx) => {

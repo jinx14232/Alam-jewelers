@@ -27,11 +27,11 @@ export default function () {
 
     }
 
-    function removeItemInCart(productID) {
+    function removeItemInCart(productCode) {
 
         setCartItems(prevItems =>
             prevItems.filter(item =>
-                item.id != productID
+                item.code != productCode
             )
         )
 

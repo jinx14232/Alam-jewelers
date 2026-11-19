@@ -9,13 +9,12 @@ function Cart(props) {
         const items = props.cartItems.map((item, index) => {
 
             if (item.gender)
-                return `${index + 1}. ${item.name}
+                return `${index + 1}. ${item.name} . ${item.code}
         Collection: ${item.gender} Category: ${item.category} 
-        Price: Rs. ${item.price}
-        url: ${window.location.origin}/product/${item.id}     `
+        url: ${window.location.origin}/product/${item.id} 
+            `
             else
-                return `${index + 1}. ${item.name} 
-        Price: Rs. ${item.price}
+                return `${index + 1}. ${item.name} . ${item.code}
         url: ${window.location.origin}/bar/${item.id}     `
         }).join('\n');
 
@@ -28,7 +27,6 @@ Alam Jewelers`
 
         return encodeURIComponent(message)
     }
-
 
     return (
 
@@ -58,9 +56,15 @@ Alam Jewelers`
                         <img src={i.images ? i.images[0].image_url : i.image_url} alt={i.name} className="cover img" />
 
                         <div>
-                            <strong>{titleCase(i.name)}</strong>
-                            <div className="meta">{i.price} -/Rs</div>
-                            <button className="remove-item" onClick={(e) => { e.stopPropagation(); props.removeItem(i.id) }}>Remove</button>
+                            <strong>{titleCase(i.name)} ({i.code})</strong>
+                            {i.metal? 
+                                <div className="meta">{i.brand} . {i.metal}</div>
+                                 :
+                                <div className="meta">{i.gender} . {i.category}</div>
+                            }
+                            
+
+                            <button className="remove-item" onClick={(e) => { e.stopPropagation(); props.removeItem(i.code) }}>Remove</button>
                         </div>
                     </div>
 

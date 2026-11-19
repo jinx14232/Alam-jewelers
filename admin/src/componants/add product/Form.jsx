@@ -17,10 +17,10 @@ export default function ({ metals }) {
 
     const [basicInfo, setBasicInfo] = useState({
         name: '',
+        code: '',
         description: '',
         gender: '',
         category_id: '',
-        price: ''
     })
 
     const [metalInfo, setMetalInfo] = useState([])
@@ -117,7 +117,7 @@ export default function ({ metals }) {
         const data = createProductData()
 
         try {
-            const responce = await fetch('http://localhost:5000/addproduct',
+            const responce = await fetch('http://localhost:5000/admin/addproduct',
                 {
                     method: 'POST',
                     body: data
@@ -144,10 +144,10 @@ export default function ({ metals }) {
     function handleCancel() {
         setBasicInfo({
             name: '',
+            code: '',
             description: '',
             gender: '',
             category_id: '',
-            price: ''
         })
         setMetalInfo([])
         setImages([])

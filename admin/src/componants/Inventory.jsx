@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Loader from './Loader';
 import {NavLink} from 'react-router-dom'
+import InventoryCard from './InventoryCard';
 
 function Inventory({ products, bars, setTracker }) {
 
@@ -9,11 +10,12 @@ function Inventory({ products, bars, setTracker }) {
     const [loading, setLoading] = useState(false)
 
     const items = activeTab === 'products' ? products : bars;
-    async function handleDelete(id) {
+    
+    async function deleteProduct(id) {
         setLoading(true)
         try {
 
-            const response = await fetch(`http://localhost:5000/product/${id}`, {
+            const response = await fetch(`http://localhost:5000/admin/product/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -22,7 +24,35 @@ function Inventory({ products, bars, setTracker }) {
 
             if (!response.ok) {
                 alert('Error occoured')
-                throw new Error('Failed to fetch products')
+                throw new Error('Failed to delete product')
+            }
+
+            const res = await response.json()
+            alert(res.message)
+            if(res)
+                setTracker(prev=> prev+1)
+
+        } catch (error) {
+            console.log(error)
+            alert('Error occoured')
+        } finally {
+            setLoading(false)
+        }
+    }
+    async function deleteBar(id) {
+        setLoading(true)
+        try {
+
+            const response = await fetch(`http://localhost:5000/admin/bar/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            if (!response.ok) {
+                alert('Error occoured')
+                throw new Error('Failed to delete bar')
             }
 
             const res = await response.json()
@@ -56,7 +86,7 @@ function Inventory({ products, bars, setTracker }) {
                         className={activeTab === 'bars' ? 'filled btn' : 'simple btn'}
                         onClick={() => setActiveTab('bars')}
                     >
-                        Gold Bars
+                        Bars
                     </button>
                 </div>
 
@@ -68,40 +98,13 @@ function Inventory({ products, bars, setTracker }) {
                                 <div className="grid">
 
                                     {
-                                        items.slice(0, 5).map(item => (
-                                            <div>
-                                            <div className="card" key={item.id}>
-
-                                                <img src={item.image_url} className='cover' />
-
-                                                <div className="data">
-                                                    <h3
-                                                        className={activeTab === 'bars' ? 'bar-name' : ''}
-                                                        style={{ marginBottom: activeTab === 'products' ? '10px' : 0 }}
-                                                    >{item.name}</h3>
-
-                                                    <div className="meta">Price {item.price} -/Rs</div>
-
-                                                    {activeTab === 'products' &&
-                                                        <>
-                                                            <p className="meta">
-                                                                {item.audience} · {item.category}
-                                                            </p>
-                                                            <p className="meta">
-                                                                {item.metals}
-                                                            </p>
-                                                        </>
-
-                                                    }
-
-                                                </div>
-
-                                                <button className="delete" onClick={() => handleDelete(item.id)}>Delete</button>
-
-                                            </div>
-                                            <p className='time'>{item.time}</p>
-                                            </div>
-
+                                        items.slice(0, 5).map((item, id) => (
+                                            <InventoryCard 
+                                                key={id}
+                                                item = {item}
+                                                activeTab = {activeTab}
+                                                handleDelete={activeTab == 'products'? deleteProduct : deleteBar}
+                                            />
                                         ))
                                     }
                                 </div>
@@ -122,7 +125,7 @@ function Inventory({ products, bars, setTracker }) {
             </div>
 
         </section>
-    );
+    )
 }
 
 export default Inventory

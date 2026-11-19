@@ -20,7 +20,7 @@ export default function () {
             try {
 
                 const response = await fetch(
-                    'http://localhost:5000/overview'
+                    'http://localhost:5000/admin/overview'
                 )
 
                 if (!response.ok) {
@@ -47,7 +47,7 @@ export default function () {
             try {
 
                 const response = await fetch(
-                    'http://localhost:5000/inventory?limit=5'
+                    'http://localhost:5000/admin/inventory?limit=5'
                 )
 
                 if (!response.ok) {

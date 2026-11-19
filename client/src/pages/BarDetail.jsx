@@ -17,7 +17,7 @@ export default function BarDetail() {
         async function getBar() {
             try {
                 
-                const response = await apiFetch(`/bar/${id}`)
+                const response = await apiFetch(`/client/bar/${id}`)
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch bars')
@@ -57,7 +57,7 @@ export default function BarDetail() {
                  </Link>
                  <span>/</span>
 
-                <span className="current bar-name">{bar.name}</span>
+                <span className="current bar-name">{bar.code}</span>
             </div>
 
             <div className="product-layout">

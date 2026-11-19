@@ -6,6 +6,7 @@ import Categories from './componants/Categories.jsx'
 import Metals from './componants/Metals.jsx'
 import AllBars from "./componants/AllBars.jsx"
 import AllProducts from "./componants/AllProducts.jsx"
+import Rates from "./componants/Rates.jsx"
 
 import './style.css'
 import {
@@ -26,6 +27,10 @@ function App() {
                     <Route
                       index
                       element={<Dashboard />}
+                    />
+                    <Route
+                        path="/admin/rates"
+                        element={<Rates />}
                     />
                     <Route
                         path="/admin/products"

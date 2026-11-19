@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import Header from './Header'
 import react from 'react'
 import Loader from './Loader'
+import InventoryCard from './InventoryCard'
 
 
 export default function () {
@@ -14,7 +15,7 @@ export default function () {
 
         async function getBars() {
             try {
-                const response = await fetch(`http://localhost:5000/allBars`)
+                const response = await fetch(`http://localhost:5000/admin/allBars`)
 
                 if (!response.ok) {
                     alert('Error occoured')
@@ -61,26 +62,12 @@ export default function () {
                                     <div className="grid">
 
                                         {
-                                            bars.map(item => (
-                                                <div>
-                                                    <div className="card" key={item.id}>
-
-                                                        <img src={item.image_url} className='cover' />
-
-                                                        <div className="data">
-                                                            <h3
-                                                                className='bar-name'
-                                                            >{item.name}</h3>
-
-                                                            <div className="meta">Price {item.price} -/Rs</div>
-
-                                                        </div>
-
-                                                        <button className="delete" onClick={() => handleDelete(item.id)}>Delete</button>
-
-                                                    </div>
-                                                    <p className='time'>{item.time}</p>
-                                                </div>
+                                            bars.map((item, id) => (
+                                                <InventoryCard
+                                                    key={id}
+                                                    item={item}
+                                                    activeTab="bars"
+                                                />
 
                                             ))
                                         }

@@ -14,8 +14,7 @@ export default function ({ bar }) {
                     className='bar-name'
                 >{bar.name}</h3>
 
-                <p className="meta">Price {bar.price} -/Rs</p>
-                <p className="meta">{bar.metal}</p>
+                <p className="meta">{bar.metal} . {bar.brand}</p>
 
             </div>
 

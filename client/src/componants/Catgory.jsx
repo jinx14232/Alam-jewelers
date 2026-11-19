@@ -99,7 +99,7 @@ function Catgory(props) {
                                         <div className="grid">
                                             {items.map((p, idx) =>
                                                 <Card
-                                                    key={p.id}
+                                                    key={idx}
                                                     product={p}
                                                     onOpen={(product) => setOpenedItem(product)}
                                                 />

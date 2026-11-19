@@ -18,7 +18,7 @@ export default function () {
         async function addCategory() {
             try {
                 const res = await fetch(
-                    'http://localhost:5000/categories',
+                    'http://localhost:5000/admin/addCategory',
                     {
                         method: 'POST',
                         headers: {
@@ -53,7 +53,7 @@ export default function () {
         
         try {
             const res = await fetch(
-                `http://localhost:5000/categories/${id}`,
+                `http://localhost:5000/admin/category/${id}`,
                 {
                     method: 'DELETE'
                 }

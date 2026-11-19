@@ -16,7 +16,7 @@ export default function () {
         weight_unit: 'grams',
         brand: 'ARY',
         fineness: '9000.9',
-        price: 0,
+        code: '',
         karat: selectedMetal == 'gold' ? 24 : 0
     })
 
@@ -34,7 +34,7 @@ export default function () {
             weight_unit: 'grams',
             brand: 'ARY',
             fineness: '9000.9',
-            price: 0,
+            code: '',
             karat: selectedMetal == 'gold' ? 24 : 0
         })
         setSelectedMetal('gold')
@@ -62,7 +62,7 @@ export default function () {
         data.append('image', images[0])
 
         try {
-            const responce = await fetch('http://localhost:5000/addbar',
+            const responce = await fetch('http://localhost:5000/admin/addbar',
                 {
                     method: 'POST',
                     body: data
@@ -104,6 +104,23 @@ export default function () {
 
                     <section className="form-section">
                         <h2>Basic Information</h2>
+
+                        <div className="form-field">
+
+                            <label htmlFor="code">
+                                Bar Code <span className="required">*</span>
+                            </label>
+
+                            <input
+                                id="code"
+                                name="code"
+                                type="text"
+                                onChange={handleChange}
+                                value={form.code}
+                                placeholder="e.g. AJ101"
+                                required
+                            />
+                        </div>
                         {selectedMetal == 'gold' &&
                             <div className="form-field">
 
@@ -196,23 +213,7 @@ export default function () {
                             </select>
 
                         </div>
-                        <div className="form-field">
-
-                            <label htmlFor="price">
-                                Bar Price <span className="required">*</span>
-                            </label>
-
-                            <input
-                                id="price"
-                                name="price"
-                                type="number"
-                                min={0}
-                                onChange={handleChange}
-                                value={form.price}
-                                placeholder="e.g. 2400000"
-                                required
-                            />
-                        </div>
+                        
                     </section>
 
                     <ImageUpload
@@ -246,7 +247,7 @@ export default function () {
                             <div className="model-body bar-model">
 
                                 <h2 className="bar-name">{form.weight} {form.weight_unit} {form.brand != '' ? form.brand : ''} {selectedMetal} bar </h2>
-                                <h3 className="price" >Price: {form.price} -/Rs</h3>
+                                <h3 className="price" >Code: {form.code} -/Rs</h3>
                                 <h2>Bar Details</h2>
 
                                 <table className="info">

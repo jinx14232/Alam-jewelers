@@ -17,7 +17,7 @@ export default function () {
 
             try {
 
-                const response = await apiFetch('/inventory?limit=3')
+                const response = await apiFetch('/client/home')
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch products')

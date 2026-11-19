@@ -40,6 +40,22 @@ export default function BasicInfo({form, setForm, categoriesGroup}) {
                     </div>
 
                     <div className="form-field">
+                        <label className="jost" htmlFor="code">
+                            Product Code <span className="required">*</span>
+                        </label>
+
+                        <input
+                            id="code"
+                            name="code"
+                            value={form.code}
+                            onChange={handleBasicInfoChange}
+                            placeholder="e.g. AJ101"
+                            required
+                        />
+
+                    </div>
+
+                    <div className="form-field">
                         <label className="jost" htmlFor="gender">
                             Collection <span>*</span>
                         </label>
@@ -66,27 +82,6 @@ export default function BasicInfo({form, setForm, categoriesGroup}) {
                             }
 
                         </select>
-                    </div>
-
-                    <div className="form-field">
-                        <label className="jost" htmlFor="description">
-                            Description
-                        </label>
-
-                        <textarea
-                            id="description"
-                            name="description"
-                            value={form.description}
-                            onChange={handleBasicInfoChange}
-                            placeholder="Describe the design and craftsmanship..."
-                            maxLength={500}
-                            rows={6}
-                        />
-
-                        <small className="character-count muted">
-                            {form.description.length}/500
-                        </small>
-
                     </div>
 
                     <div className="form-field">
@@ -121,21 +116,26 @@ export default function BasicInfo({form, setForm, categoriesGroup}) {
                         </select>
                     </div>
                     <div className="form-field">
-                        <label className="jost" htmlFor="price">
-                            Product price (aprox. final) <span>*</span>
+                        <label className="jost" htmlFor="description">
+                            Description
                         </label>
 
-                        <input
-                            id="price"
-                            name="price"
-                            type="number"
-                            min="0"
-                            value={form.price}
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={form.description}
                             onChange={handleBasicInfoChange}
-                            placeholder="eg. 100000"
-                            required
+                            placeholder="Describe the design and craftsmanship..."
+                            maxLength={500}
+                            rows={6}
                         />
+
+                        <small className="character-count muted">
+                            {form.description.length}/500
+                        </small>
+
                     </div>
+                
                 </div>
             </section>
 

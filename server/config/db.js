@@ -25,16 +25,28 @@ db.exec(`
         name TEXT NOT NULL UNIQUE
     );
 
+    CREATE TABLE IF NOT EXISTS metal_rates (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        metal_id INTEGER NOT NULL,
+        purity TEXT NOT NULL,
+        rate_per_gram REAL NOT NULL,
+
+        FOREIGN KEY (metal_id) REFERENCES metals(id),
+
+        UNIQUE(metal_id, purity)
+    );
+
 
     CREATE TABLE IF NOT EXISTS products (
 
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
+        product_code TEXT NOT NULL UNIQUE,
         description TEXT,
         category_id INTEGER NOT NULL,
         gender TEXT NOT NULL
             CHECK (gender IN ('women', 'men', 'newBorn')),
-        price REAL NOT NULL CHECK (price >= 0),
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
         FOREIGN KEY (category_id) REFERENCES categories(id)
@@ -83,7 +95,7 @@ db.exec(`
         brand TEXT NOT NULL DEFAULT 'ARY',
         fineness REAL,
         karat INT,
-        price REAL NOT NULL,
+        bar_code TEXT NOT NULL UNIQUE,
         image_url TEXT NOT NULL , 
         public_id TEXT NOT NULL,
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP

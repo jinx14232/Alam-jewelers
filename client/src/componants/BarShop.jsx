@@ -1,5 +1,4 @@
 import Tabs from './Tabs.jsx'
-import react from 'react'
 import BarCatelog from './BarCatelog.jsx'
 import { tabsText } from '../Utility.js'
 import { useSearchParams } from 'react-router-dom'

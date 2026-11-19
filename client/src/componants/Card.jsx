@@ -11,9 +11,12 @@ function Card(props) {
 
             <div className="data">
                 <h3 className={!props.product.gender? 'bar-name': ''}>{titleCase(props.product.name)}</h3>
-                <div className="meta">Price {props.product.price} -/Rs</div>
+                {
+                    props.product.metal?
+                    <div className="meta">{props.product.brand} . {props.product.weight} {props.product.unit}</div> :
+                    <div className="meta">{props.product.gender} . {props.product.category}</div> 
+                }
             </div>
-
         </Link>
     )
 }

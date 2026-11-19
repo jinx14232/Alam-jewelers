@@ -1,5 +1,4 @@
 import Card from './Card.jsx'
-import Model from './Model.jsx'
 import Loader from './Loader.jsx'
 import React from 'react'
 import { apiFetch } from '../api.js'
@@ -15,7 +14,7 @@ function BarCatelog({currentTab}) {
     React.useEffect(() => {
         async function getBars() {
             try {
-                const response = await apiFetch('/bars')
+                const response = await apiFetch('/client/barCard')
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch bars')

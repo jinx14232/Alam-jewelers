@@ -9,7 +9,7 @@ export default function ProductInfo({ product }) {
     } = useOutletContext()
 
     const isInCart = cartItems.some(
-        item => item.id === product.id && item.name == product.name
+        item => item.code === product.code 
     )
 
     const whatsappNumber = "923135452115"
@@ -39,10 +39,13 @@ export default function ProductInfo({ product }) {
 
             <div className="product-heading">
                 <h1>{product.name}</h1>
+                <span>
+                    {product.code}
+                </span>
+            </div>
 
-                <h2>
-                    Rs. {Number(product.price).toLocaleString('en-PK')}
-                </h2>
+            <div className="product-price">
+                <a href="">Calculate price</a>
             </div>
 
             <div className="product-description">
@@ -86,7 +89,7 @@ export default function ProductInfo({ product }) {
                         onClick={
                             () => {
                                 isInCart ?
-                                    removeItemInCart(product.id) :
+                                    removeItemInCart(product.code) :
                                     addItemInCart(product)
                             }
                         }

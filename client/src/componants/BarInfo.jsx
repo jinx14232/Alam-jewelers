@@ -9,7 +9,7 @@ export default function BarInfo({ bar }) {
     } = useOutletContext()
 
     const isInCart = cartItems.some(
-        item => item.id === bar.id && item.name == bar.name
+        item => item.code === bar.code
     )
 
     const whatsappNumber = "923135452115"
@@ -40,7 +40,7 @@ export default function BarInfo({ bar }) {
                 <h1>{bar.name}</h1>
 
                 <h2>
-                    Rs. {Number(bar.price).toLocaleString('en-PK')}
+                    {bar.code}
                 </h2>
             </div>
 
@@ -86,7 +86,7 @@ export default function BarInfo({ bar }) {
                         onClick={
                             () => {
                                 isInCart ?
-                                    removeItemInCart(bar.id) :
+                                    removeItemInCart(bar.code) :
                                     addItemInCart(bar)
                             }
                         }

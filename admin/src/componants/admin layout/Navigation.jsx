@@ -8,6 +8,10 @@ function Navigation(props) {
                 Dashboard
             </NavLink>
 
+            <NavLink to="/admin/rates">
+                Rates
+            </NavLink>
+
             <NavLink to="/admin/bars">
                 Add Bar
             </NavLink>
@@ -19,7 +23,7 @@ function Navigation(props) {
             <NavLink to="/admin/categories">
                 Categories
             </NavLink>
-
+    
             <NavLink to="/admin/metals">
                 Metals
             </NavLink>

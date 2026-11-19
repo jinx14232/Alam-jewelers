@@ -70,16 +70,15 @@ function ProductCatelog(props) {
     React.useEffect(() => {
         async function getProducts() {
             try {
-                const response = await apiFetch('/products')
+                const response = await apiFetch('/client/productCard')
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch products')
                 }
 
                 const data = await response.json()
-                // console.log('recieved products: ', data)
+                console.log('card products: ', data)
                 setProducts(data)
-
 
             } catch (error) {
                 console.error(error)

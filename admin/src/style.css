@@ -275,6 +275,7 @@ html {
     font-family: 'Jost', serif;
     font-size: 21px;
     font-weight: 500;
+    text-transform: capitalize;
 }
 
 .form-grid {
@@ -649,6 +650,7 @@ html {
             color: var(--cream);
             font-family: 'Cormorant Garamond', serif;
             text-transform: capitalize;
+            margin-bottom: 10px;
         }
 
         .meta {
