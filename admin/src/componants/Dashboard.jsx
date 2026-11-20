@@ -24,7 +24,7 @@ export default function () {
                 )
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch products')
+                    throw new Error('Something went wrong in request! Failed to get overview')
                 }
 
                 const res = await response.json()
@@ -32,7 +32,7 @@ export default function () {
 
             } catch (error) {
                 console.error(error)
-                alert('Error occored')
+                alert('Something went wrong! Failed to get overview')
             } finally {
                 setLoading(false)
             }
@@ -51,7 +51,7 @@ export default function () {
                 )
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch products')
+                    throw new Error('Something went wrong in request! Failed to get inventory')
                 }
 
                 const res = await response.json()

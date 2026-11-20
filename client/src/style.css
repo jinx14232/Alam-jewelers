@@ -467,7 +467,7 @@ button {
         font-size: 1.4rem;
         margin-bottom: 6px
     }
-
+    
     iframe {
         width: 80%;
         min-height: 150px;
@@ -700,6 +700,7 @@ button {
     align-items: end;
     justify-content: center;
     min-width: 200px;
+    max-width: 320px;
     overflow: hidden;
 
     img {

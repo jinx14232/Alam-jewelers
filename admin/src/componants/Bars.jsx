@@ -71,16 +71,16 @@ export default function () {
 
             const suc = await responce.json()
 
-            if (suc.message == 'success') {
-                alert('Bar Added')
+            if (suc.error) {
+                alert(suc.error)
                 handleCancel()
             } else {
-                alert('Bar failed')
+                alert(suc.message)
             }
 
         } catch {
             console.log('error sending product')
-            alert('Bar failed')
+            alert('Upload failed! error in request!')
         } finally {
             setLoading(false)
         }

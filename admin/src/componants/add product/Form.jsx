@@ -126,16 +126,16 @@ export default function ({ metals }) {
 
             const suc = await responce.json()
 
-            if (suc.message == 'success') {
-                alert('Product Added')
+            if (suc.error) {
+                alert(suc.error)
                 handleCancel()
             } else {
-                alert('Product failed')
+                alert(suc.message)
             }
 
         } catch {
             console.log('error sending product')
-            alert('Product failed')
+            alert('Upload failed! error in request')
         } finally {
             setLoading(false)
         }

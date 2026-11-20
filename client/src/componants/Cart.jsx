@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { titleCase } from "../Utility"
+
 function Cart(props) {
 
     const navigate = useNavigate()

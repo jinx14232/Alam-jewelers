@@ -103,21 +103,21 @@ export default function () {
                             <NavLink to='/collection?tab=men'>
                                 Men
                             </NavLink>
-                            <img src="../public/men.jpeg" alt="image" />
+                            <img src="/men.jpeg" alt="image" />
 
                         </div>
                         <div className="box">
                             <NavLink to='/collection?tab=women'>
                                 Women
                             </NavLink>
-                            <img src="../public/women.jpeg" alt="image" />
+                            <img src="/women.jpeg" alt="image" />
 
                         </div>
                         <div className="box">
                             <NavLink to='/collection?tab=newBorn'>
                                 New Born
                             </NavLink>
-                            <img src="../public/baby.jpeg" alt="image" />
+                            <img src="/baby.jpeg" alt="image" />
                         </div>
                     </div>
 
@@ -127,7 +127,7 @@ export default function () {
                     <div className="poster-con">
                         <div className="content">
                             <NavLink to='/bars'>
-                                <h1>Golden Silver Bars</h1>
+                                <h1>Gold Silver Bars</h1>
                                 <p>Take a look at Bars collection.</p>
                                 <div className="btn">Bars</div>
                             </NavLink>
