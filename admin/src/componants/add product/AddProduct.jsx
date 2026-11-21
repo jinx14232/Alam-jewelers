@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import Header from '../Header.jsx'
 import Form from './Form.jsx'
+import { apiFetch } from '../../api.js'
 
 export default function AddProduct() {
 
@@ -11,7 +12,7 @@ export default function AddProduct() {
 
         async function getMetals() {
             try {
-                const responce = await fetch('http://localhost:5000/metals')
+                const responce = await apiFetch('/metals')
                 const data = await responce.json()
                 setMetals(data)
             }

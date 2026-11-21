@@ -1,3 +1,4 @@
+import { apiFetch } from "../api"
 import Header from "./Header"
 import react from "react"
 
@@ -17,8 +18,8 @@ export default function () {
 
         async function addCategory() {
             try {
-                const res = await fetch(
-                    'http://localhost:5000/admin/addCategory',
+                const res = await apiFetch(
+                    '/admin/addCategory',
                     {
                         method: 'POST',
                         headers: {
@@ -52,8 +53,8 @@ export default function () {
         setLoading(true)
         
         try {
-            const res = await fetch(
-                `http://localhost:5000/admin/category/${id}`,
+            const res = await apiFetch(
+                `/admin/category/${id}`,
                 {
                     method: 'DELETE'
                 }
@@ -82,8 +83,8 @@ export default function () {
     react.useEffect(() => {
         async function getCategory() {
             try {
-                const response = await fetch(
-                    `http://localhost:5000/rawCategories`
+                const response = await apiFetch(
+                    `/rawCategories`
                 )
 
                 if (!response.ok) {

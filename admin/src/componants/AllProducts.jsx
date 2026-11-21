@@ -4,6 +4,7 @@ import Header from './Header'
 import react from 'react'
 import Loader from './Loader'
 import InventoryCard from './InventoryCard'
+import { apiFetch } from '../api'
 
 
 export default function () {
@@ -15,7 +16,7 @@ export default function () {
 
         async function getProducts() {
             try {
-                const response = await fetch(`http://localhost:5000/admin/allProducts`)
+                const response = await apiFetch(`/admin/allProducts`)
 
                 if (!response.ok) {
                     alert('Error occoured')

@@ -49,6 +49,9 @@ db.exec(`
             CHECK (gender IN ('women', 'men', 'newBorn')),
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
+        video_url TEXT,
+        video_public_id TEXT,
+
         FOREIGN KEY (category_id) REFERENCES categories(id)
 
     );

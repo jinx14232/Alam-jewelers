@@ -14,7 +14,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors({
     origin: ['http://localhost:5173',
         'http://localhost:5174',
-        'https://0mlxmjxd-5173.inc1.devtunnels.ms']
+        'https://0mlxmjxd-5173.inc1.devtunnels.ms',
+        'https://0mlxmjxd-5174.inc1.devtunnels.ms'
+    ]
 }))
 
 app.get('/', (req, res) => {

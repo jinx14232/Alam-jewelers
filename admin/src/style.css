@@ -513,7 +513,7 @@ html {
 .filled {
     border: 1px solid var(--ink);
     background: var(--ink);
-    color: #f5e7c8;
+    color: var(--cream);
 }
 
 .filled:hover {

@@ -4,8 +4,10 @@ import ImageUpload from '../ImageUpload.jsx'
 import Actions from '../Actions.jsx'
 import PreviewModel from './PreviewModel.jsx'
 import Loader from '../Loader.jsx'
+import VideoUpload from '../VideoUpload.jsx'
 
 import { useState, useEffect } from 'react'
+import { apiFetch } from '../../api.js'
 
 export default function ({ metals }) {
 
@@ -41,6 +43,7 @@ export default function ({ metals }) {
     }, [selectedMetals])
 
     const [images, setImages] = useState([])
+    const [video, setVideo] = useState(null)
 
     //------------------------------------------------
 
@@ -52,7 +55,7 @@ export default function ({ metals }) {
         async function getCategories() {
             try {
 
-                const responce = await fetch('http://localhost:5000/rawCategories', {
+                const responce = await apiFetch('/rawCategories', {
                     method: 'GET',
                 })
 
@@ -82,10 +85,12 @@ export default function ({ metals }) {
     //---------------preview--------------------
 
     const [previewImages, setPreviewImages] = useState([])
+    const [previewVideo, setPreviewVideo] = useState([])
+
+
     const [showPreview, setShowPreview] = useState(false)
 
     function createProductData() {
-
         const data = new FormData()
 
         Object.entries(basicInfo).forEach(([key, value]) => {
@@ -95,6 +100,9 @@ export default function ({ metals }) {
         images.forEach(image => {
             data.append('images', image)
         })
+
+        if(video)
+            data.append('video', video)
 
         return data
     }
@@ -117,7 +125,7 @@ export default function ({ metals }) {
         const data = createProductData()
 
         try {
-            const responce = await fetch('http://localhost:5000/admin/addproduct',
+            const responce = await apiFetch('/admin/addproduct',
                 {
                     method: 'POST',
                     body: data
@@ -128,9 +136,10 @@ export default function ({ metals }) {
 
             if (suc.error) {
                 alert(suc.error)
-                handleCancel()
             } else {
                 alert(suc.message)
+                handleCancel()
+
             }
 
         } catch {
@@ -151,6 +160,7 @@ export default function ({ metals }) {
         })
         setMetalInfo([])
         setImages([])
+        setVideo(null)
         setSelectedMetals([])
     }
 
@@ -180,6 +190,13 @@ export default function ({ metals }) {
                     onImagesChange={setImages}
                     previewImages={previewImages}
                     setPreviewImages={setPreviewImages}
+                />
+                <VideoUpload
+                    heading="Product Video"
+                    video={video}
+                    onVideoChange={setVideo}
+                    previewVideo={previewVideo}
+                    setPreviewVideo={setPreviewVideo}
                 />
 
                 <Actions

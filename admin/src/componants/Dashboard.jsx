@@ -2,6 +2,7 @@ import Header from "./Header"
 import react from "react"
 import Loader from "./Loader"
 import Inventory from "./Inventory"
+import { apiFetch } from "../api"
 
 export default function () {
 
@@ -19,8 +20,8 @@ export default function () {
 
             try {
 
-                const response = await fetch(
-                    'http://localhost:5000/admin/overview'
+                const response = await apiFetch(
+                    '/admin/overview'
                 )
 
                 if (!response.ok) {
@@ -46,8 +47,8 @@ export default function () {
 
             try {
 
-                const response = await fetch(
-                    'http://localhost:5000/admin/inventory?limit=5'
+                const response = await apiFetch(
+                    '/admin/inventory?limit=5'
                 )
 
                 if (!response.ok) {

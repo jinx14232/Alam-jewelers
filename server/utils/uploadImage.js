@@ -1,15 +1,16 @@
 import cloudinary from '../config/cloudinary.js'
 
- export const uploadImage = (file) => {
+ export const uploadMedia = (file, resource_type = 'image') => {
     return new Promise((resolve, reject) => {
 
         const stream = cloudinary.uploader.upload_stream(
             {
-                folder: 'jewelry-products'
+                folder: 'jewelry-products',
+                resource_type: resource_type
             },
             (error, result) => {
                 if (error) return reject(error)
-                resolve({image_url: result.secure_url, public_id: result.public_id})
+                resolve({url: result.secure_url, public_id: result.public_id})
             }
         )
 
@@ -17,10 +18,10 @@ import cloudinary from '../config/cloudinary.js'
     })
 }
 
-export const deleteImage = (public_id) => {
+export const deleteMedia = (public_id, resource_type = 'image') => {
     return new Promise((resolve, reject) => {
 
-        cloudinary.uploader.destroy(public_id, (error, result) => {
+        cloudinary.uploader.destroy(public_id, {resource_type}, (error, result) => {
             if (error) return reject(error)
             resolve(result)
         })

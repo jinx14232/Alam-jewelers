@@ -1,3 +1,4 @@
+import { apiFetch } from "../api"
 import Header from "./Header"
 import react from 'react'
 
@@ -9,8 +10,8 @@ export default function () {
 
         async function getMetals() {
             try {
-                const response = await fetch(
-                    `http://localhost:5000/metals`
+                const response = await apiFetch(
+                    `/metals`
                 )
 
                 if (!response.ok) {

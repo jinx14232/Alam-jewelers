@@ -1,7 +1,7 @@
 import express from "express"
 import db from "../../config/db.js"
 import multer from 'multer'
-import { uploadImage, deleteImage } from '../../utils/uploadImage.js'
+import { uploadMedia, deleteMedia} from '../../utils/uploadImage.js'
 
 const rounter = express.Router()
 
@@ -10,7 +10,10 @@ const upload = multer({
 })
 
 
-rounter.post('/addproduct', upload.array('images', 5), async (req, res) => {
+rounter.post('/addproduct', upload.fields([
+    { name: 'images', maxCount: 5 },
+    { name: 'video', maxCount: 1 }
+]), async (req, res) => {
 
     const {
         name,
@@ -25,11 +28,19 @@ rounter.post('/addproduct', upload.array('images', 5), async (req, res) => {
 
     try {
 
-        const imagesData = await Promise.all(
-            req.files.map(file => uploadImage(file))
-        )
+        console.log('images and video uploading')
 
-        insertProduct({ name, code, description, gender, category_id}, metals, imagesData)
+        const imagesData = await Promise.all(
+            req.files.images.map(file => uploadMedia(file))
+        )
+        console.log('images done')
+
+        const videoData = req.files.video? 
+            await uploadMedia(req.files.video[0], 'video') :
+            null
+
+        console.log('video uploaded')
+        insertProduct({ name, code, description, gender, category_id }, metals, imagesData, videoData)
 
         res.json({
             message: 'Product Added',
@@ -59,13 +70,13 @@ rounter.post('/addbar', upload.array('image', 1), async (req, res) => {
     try {
 
         const imageData = await Promise.all(
-            req.files.map(file => uploadImage(file))
+            req.files.map(file => uploadMedia(file))
         )
 
         db.prepare(`
             INSERT INTO bars(name, metal, weight, weight_unit, brand, fineness, karat, bar_code, image_url, public_id) VALUES 
             (?,?,?,?,?,?,?,?,?, ?)
-        `).run(name, metal, weight, weight_unit, brand, fineness, karat, code, imageData[0].image_url, imageData[0].public_id)
+        `).run(name, metal, weight, weight_unit, brand, fineness, karat, code, imageData[0].url, imageData[0].public_id)
 
         res.json({
             message: 'Bar Added',
@@ -163,22 +174,31 @@ rounter.delete('/product/:id', async (req, res) => {
             WHERE product_id = ?
         `).all(id)
 
+        const videoID = db.prepare(`
+            SELECT video_public_id
+            FROM products
+            WHERE id = ?
+        `).all(id)
+
         const result = db.prepare(`
             DELETE FROM products
             WHERE id = ?
         `).run(id)
-
-        for (const image of imagesID) {
-            if (image.public_id) {
-                await deleteImage(image.public_id);
-            }
-        }
 
         if (result.changes === 0) {
             return res.status(404).json({
                 message: 'Product not found'
             });
         }
+
+        for (const image of imagesID) {
+            if (image.public_id) {
+                await deleteMedia(image.public_id);
+            }
+        }
+
+        if(videoID && videoID.video_public_id)
+            await deleteMedia(videoID.video_public_id);
 
         res.json({
             message: 'Product deleted successfully'
@@ -209,7 +229,7 @@ rounter.delete('/bar/:id', async (req, res) => {
             WHERE id = ?
         `).run(id)
 
-        const responce = await deleteImage(imagesID.public_id).catch((error)=>{
+        const responce = await deleteImage(imagesID.public_id).catch((error) => {
             console.log('cannot delete', error)
             return null;
         })
@@ -375,14 +395,14 @@ function getInventoryBars(limit) {
 }
 
 
-function insertProduct(product, metals, imageData) {
+function insertProduct(product, metals, imageData, videoData) {
 
     const result = db.prepare(
-        `INSERT INTO products(name, product_code, description, category_id, gender) 
-        VALUES (?,?,?,?,?)
+        `INSERT INTO products(name, product_code, description, category_id, gender, video_url, video_public_id) 
+        VALUES (?,?,?,?,?,?,?)
         `
     ).run(
-        product.name, product.code, product.description, product.category_id, product.gender
+        product.name, product.code, product.description, product.category_id, product.gender, videoData?.url || null, videoData?.public_id || null
     )
 
     const lastRowID = result.lastInsertRowid;
@@ -394,7 +414,7 @@ function insertProduct(product, metals, imageData) {
     )
 
     imageData.forEach((image, idx) => {
-        insertImages.run(lastRowID, image.image_url, image.public_id, idx == 0 ? 1 : 0)
+        insertImages.run(lastRowID, image.url, image.public_id, idx == 0 ? 1 : 0)
     })
 
     const insertMetalInfo = db.prepare(

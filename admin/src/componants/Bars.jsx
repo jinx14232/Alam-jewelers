@@ -3,6 +3,7 @@ import { useState } from "react"
 import ImageUpload from "./ImageUpload"
 import Actions from "./Actions"
 import Loader from "./Loader"
+import { apiFetch } from "../api"
 export default function () {
 
     const [selectedMetal, setSelectedMetal] = useState('gold')
@@ -62,7 +63,7 @@ export default function () {
         data.append('image', images[0])
 
         try {
-            const responce = await fetch('http://localhost:5000/admin/addbar',
+            const responce = await apiFetch('/admin/addbar',
                 {
                     method: 'POST',
                     body: data

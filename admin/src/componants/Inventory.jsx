@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Loader from './Loader';
 import {NavLink} from 'react-router-dom'
 import InventoryCard from './InventoryCard';
+import { apiFetch } from '../api';
 
 function Inventory({ products, bars, setTracker }) {
 
@@ -15,7 +16,7 @@ function Inventory({ products, bars, setTracker }) {
         setLoading(true)
         try {
 
-            const response = await fetch(`http://localhost:5000/admin/product/${id}`, {
+            const response = await apiFetch(`/admin/product/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -43,7 +44,7 @@ function Inventory({ products, bars, setTracker }) {
         setLoading(true)
         try {
 
-            const response = await fetch(`http://localhost:5000/admin/bar/${id}`, {
+            const response = await apiFetch(`/admin/bar/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'

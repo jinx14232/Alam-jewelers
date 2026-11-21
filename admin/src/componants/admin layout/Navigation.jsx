@@ -4,7 +4,7 @@ function Navigation(props) {
     return (
         <nav className={props.class}>
 
-            <NavLink to="/admin" end>
+            <NavLink to="/" end>
                 Dashboard
             </NavLink>
 

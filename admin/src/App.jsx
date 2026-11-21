@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route
-                    path="/admin"
+                    path="/"
                     element={<AdminLayout />}
                 >
 

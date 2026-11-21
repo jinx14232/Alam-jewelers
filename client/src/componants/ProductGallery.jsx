@@ -1,9 +1,13 @@
-
 import { useEffect, useState } from 'react';
 
-export default function ProductGallery({ images = [] }) {
+export default function ProductGallery({ images = [], videoUrl = '' }) {
 
-    const [activeImage, setActiveImage] = useState(0);
+
+    const [activeMedia, setActiveMedia] = useState({
+        type: 'image',
+        index: 0
+    })
+
     const [isViewerOpen, setIsViewerOpen] = useState(false);
     const [zoom, setZoom] = useState(1);
 
@@ -19,6 +23,7 @@ export default function ProductGallery({ images = [] }) {
     };
 
     useEffect(() => {
+
         if (!isViewerOpen) {
             return undefined;
         }
@@ -32,6 +37,7 @@ export default function ProductGallery({ images = [] }) {
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
+
     }, [isViewerOpen]);
 
     if (!images.length) {
@@ -41,23 +47,36 @@ export default function ProductGallery({ images = [] }) {
     return (
         <div className="product-gallery">
 
-            <button
-                type="button"
-                className="gallery-primary"
-                onClick={() => {
-                    setZoom(1);
-                    setIsViewerOpen(true);
-                }}
-                aria-label="Open product image for a closer look"
-            >
-                <img
-                    src={images[activeImage].image_url}
-                    alt="Product"
-                />
-                <span className="gallery-zoom-hint">Click to inspect</span>
-            </button>
+            <div className="gallery-primary">
 
-            {images.length > 1 && (
+                {activeMedia.type === 'image' ? (
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setZoom(1);
+                            setIsViewerOpen(true);
+                        }}
+                    >
+                        <img
+                            src={images[activeMedia.index].image_url}
+                            alt="Product"
+                        />
+                        <span className="gallery-zoom-hint">
+                            Click to inspect
+                        </span>
+                    </button>
+                ) : (
+                    <video
+                        src={videoUrl}
+                        controls
+                        autoPlay
+                        playsInline
+                    />
+                )}
+
+            </div>
+
+            {(images.length > 1 || videoUrl != '') && (
                 <div className="gallery-more">
 
                     <p>Take a deeper look</p>
@@ -67,10 +86,13 @@ export default function ProductGallery({ images = [] }) {
                         {images.map((image, index) => (
                             <div
                                 key={index}
-                                className={`gallery-thumbnail ${
-                                    activeImage === index ? 'active' : ''
-                                }`}
-                                onClick={() => setActiveImage(index)}
+                                className={`gallery-thumbnail ${activeMedia.type === 'image' &&
+                                    activeMedia.index === index ? 'active' : ''
+                                    }`}
+                                onClick={() => setActiveMedia({
+                                    type: 'image',
+                                    index
+                                })}
                             >
                                 <img
                                     src={image.image_url}
@@ -78,6 +100,27 @@ export default function ProductGallery({ images = [] }) {
                                 />
                             </div>
                         ))}
+
+                        {
+                            videoUrl &&
+
+                            <div
+                                className={`gallery-thumbnail video-thumbnail ${activeMedia.type === 'video' ? 'active' : ''
+                                    }`}
+                                onClick={() => setActiveMedia({
+                                    type: 'video',
+                                    index: 0
+                                })}
+                            >
+                                <video src={videoUrl} muted preload="metadata" />
+
+                                <span className="video-play-icon">
+                                    ▶
+                                </span>
+                            </div>
+                        }
+
+
 
                     </div>
                 </div>
@@ -112,7 +155,7 @@ export default function ProductGallery({ images = [] }) {
                             }}
                         >
                             <img
-                                src={images[activeImage].image_url}
+                                src={images[activeMedia.index].image_url}
                                 alt="Product enlarged"
                                 style={{ transform: `scale(${zoom})` }}
                             />

@@ -44,7 +44,6 @@ export default function ProductDetail() {
         men: 'Men',
         newBorn: 'New Born'
     }
-
     return (
         <section className="product-details">
 
@@ -72,6 +71,7 @@ export default function ProductDetail() {
                     <>
                         <ProductGallery
                             images={product['images']}
+                            videoUrl={product['video_url']}
                         />
 
                         <ProductInfo

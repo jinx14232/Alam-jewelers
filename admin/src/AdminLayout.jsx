@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import Header from './componants/admin layout/Header.jsx'
 import Sidebar from './componants/admin layout/Sidebar.jsx'
-import MobileNav from './componants/admin layout/MobileNav.jsx'
 import { useState } from 'react'
 function AdminLayout() {
 

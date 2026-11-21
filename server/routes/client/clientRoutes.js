@@ -109,6 +109,7 @@ router.get('/product/:id', (req, res) => {
                 p.name,
                 p.description,
                 p.gender,
+                p.video_url,
                 p.product_code AS code,
                 c.name AS category
             FROM products p
