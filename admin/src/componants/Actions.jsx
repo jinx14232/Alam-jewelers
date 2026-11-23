@@ -14,7 +14,6 @@ export default function Actions({ handleCancel, handlePreview}) {
             type="button"
             className="btn filled"
             onClick={handlePreview}
-
           >
             Item preview
           </button>

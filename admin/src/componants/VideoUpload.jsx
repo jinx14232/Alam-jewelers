@@ -19,7 +19,7 @@ export default function VideoUpload({ heading, video, onVideoChange, previewVide
 
         const selected = e.target.files[0]
         const validVideo = selected.type.startsWith('video/')
-        console.log(selected)
+        
         if(validVideo)
             onVideoChange(selected)
 

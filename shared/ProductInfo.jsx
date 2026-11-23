@@ -1,20 +1,20 @@
 import { useOutletContext } from 'react-router-dom'
 
-export default function ProductInfo({ product }) {
+export default function ProductInfo({ product, preview = false}) {
 
     const {
         addItemInCart,
         removeItemInCart,
         cartItems
-    } = useOutletContext()
+    } = preview? {} : useOutletContext()
 
-    const isInCart = cartItems.some(
+    const isInCart = preview? false : cartItems?.some(
         item => item.code === product.code 
     )
 
     const whatsappNumber = "923135452115"
     const handleWhatsAppCheckout = () => {
-        console.log('sending')
+        if(preview) return
         const productUrl = `${window.location.origin}/product/${product.id}`;
         const message = `
                 Assalam-o-Alaikum!      
@@ -88,6 +88,7 @@ export default function ProductInfo({ product }) {
                         className="action-btn add-cart"
                         onClick={
                             () => {
+                                if(preview) return
                                 isInCart ?
                                     removeItemInCart(product.code) :
                                     addItemInCart(product)

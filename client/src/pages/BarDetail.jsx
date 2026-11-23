@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import ProductGallery from '../componants/ProductGallery.jsx'
+import ProductGallery from '../../../shared/ProductGallery.jsx'
 import BarInfo from '../componants/BarInfo.jsx';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from '../componants/Loader.jsx';
 import { apiFetch } from '../api.js';
+import BreadCrumbs from '../../../shared/BreadCrumbs.jsx';
 
 export default function BarDetail() {
 
@@ -39,26 +39,32 @@ export default function BarDetail() {
 
     }, [id])
 
+    const breadCrumbs = [
+        {
+            name: 'Home',
+            link: '/'
+        },
+        {
+            name: 'Bars',
+            link: `/bars`
+        },
+        {
+            name: bar.metal,
+            link: `/bars?tab=${bar.metal}`
+        },
+        {
+            name: bar.code,
+            link: ''
+        }
+
+    ]
+
     return (
         <section className="product-details">
 
-            <div className="breadcrumbs">
-
-                <Link to="/">Home</Link>
-                <span>/</span>
-
-                <Link to={`/bars`}>
-                    Bars
-                </Link>
-                <span>/</span>
-
-                <Link to={`/bars?tab=${bar.metal}`}>
-                    {bar.metal}
-                 </Link>
-                 <span>/</span>
-
-                <span className="current bar-name">{bar.code}</span>
-            </div>
+            <BreadCrumbs
+                breadCrumbs={breadCrumbs}
+            />
 
             <div className="product-layout">
 

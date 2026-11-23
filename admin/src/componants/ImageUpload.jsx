@@ -1,16 +1,18 @@
 
 import { useEffect, useState } from 'react'
 
-export default function ImageUpload({heading, maxUploads, images, onImagesChange, previewImages, setPreviewImages }) {
+export default function ImageUpload({ heading, maxUploads, images, onImagesChange, previewImages, setPreviewImages }) {
 
 
     useEffect(() => {
-        const urls = images.map(file => URL.createObjectURL(file))
+        const previews = images.map(file => ({
+            image_url: URL.createObjectURL(file)
+        }))
 
-        setPreviewImages(urls)
+        setPreviewImages(previews)
 
         return () => {
-            urls.forEach(url => URL.revokeObjectURL(url))
+            previews.forEach(item => URL.revokeObjectURL(item.image_url))
         }
     }, [images])
 
@@ -52,14 +54,14 @@ export default function ImageUpload({heading, maxUploads, images, onImagesChange
                 <label className="upload-box">
                     <span className="upload-icon">＋</span>
 
-                    <strong>Click to upload image{maxUploads>1?'s':''}</strong>
+                    <strong>Click to upload image{maxUploads > 1 ? 's' : ''}</strong>
 
                     <span className="upload-description">
-                        Select {maxUploads>1?'multiple images':'single image'} from your device
+                        Select {maxUploads > 1 ? 'multiple images' : 'single image'} from your device
                     </span>
 
                     <span className="upload-formats">
-                        PNG, JPG, WEBP · Up to {maxUploads} image{maxUploads>1?'s':''}
+                        PNG, JPG, WEBP · Up to {maxUploads} image{maxUploads > 1 ? 's' : ''}
                     </span>
 
                     <input
@@ -81,7 +83,7 @@ export default function ImageUpload({heading, maxUploads, images, onImagesChange
                                 key={`${image.name}-${index}`}
                             >
                                 <img
-                                    src={previewImages[index]}
+                                    src={previewImages[index]?.image_url}
                                     alt={image.name}
                                 />
 

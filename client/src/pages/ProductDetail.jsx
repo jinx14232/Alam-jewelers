@@ -1,10 +1,8 @@
-import { Link } from 'react-router-dom';
-import ProductGallery from '../componants/ProductGallery.jsx';
-import ProductInfo from '../componants/ProductInfo.jsx';
+
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Loader from '../componants/Loader.jsx';
 import { apiFetch } from '../api.js';
+import ProductDetails from '../../../shared/ProductDetails.jsx';
 
 export default function ProductDetail() {
 
@@ -44,44 +42,31 @@ export default function ProductDetail() {
         men: 'Men',
         newBorn: 'New Born'
     }
+
+    const breadCrumbs = [
+        {
+            name: 'Home',
+            link: '/'
+        },
+        {
+            name: audience[product.gender],
+            link: `/collection?tab=${product.gender}`
+        },
+        {
+            name: product.category,
+            link: `/collection?tab=${product.gender}`
+        },
+        {
+            name: product.code,
+            link: ''
+        }
+
+    ]
     return (
-        <section className="product-details">
-
-            <div className="breadcrumbs">
-
-                <Link to="/">Home</Link>
-                <span>/</span>
-
-                <Link to={`/collection?tab=${product.gender}`}>
-                    {audience[product.gender]}
-                </Link>
-                <span>/</span>
-
-                <Link to={`/collection?tab=${product.gender}`}>
-                    {product.category}
-                 </Link>
-                 <span>/</span>
-
-                <span className="current">{product.code}</span>
-            </div>
-
-            <div className="product-layout">
-
-                {loading ? <Loader /> :
-                    <>
-                        <ProductGallery
-                            images={product['images']}
-                            videoUrl={product['video_url']}
-                        />
-
-                        <ProductInfo
-                            product={product}
-                        />
-                    </>
-                }
-
-            </div>
-
-        </section>
+        <ProductDetails
+            loading = {loading}
+            breadCrumbs ={breadCrumbs}
+            product={product}
+        />
     )
 }

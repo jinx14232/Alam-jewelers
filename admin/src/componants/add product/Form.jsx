@@ -43,7 +43,7 @@ export default function ({ metals }) {
     }, [selectedMetals])
 
     const [images, setImages] = useState([])
-    const [video, setVideo] = useState(null)
+    const [video, setVideo] = useState('')
 
     //------------------------------------------------
 
@@ -85,7 +85,7 @@ export default function ({ metals }) {
     //---------------preview--------------------
 
     const [previewImages, setPreviewImages] = useState([])
-    const [previewVideo, setPreviewVideo] = useState([])
+    const [previewVideo, setPreviewVideo] = useState('')
 
 
     const [showPreview, setShowPreview] = useState(false)
@@ -163,7 +163,11 @@ export default function ({ metals }) {
         setVideo(null)
         setSelectedMetals([])
     }
-
+    //for preview
+    function getCategoryNameFromId(id){
+       return categoriesGroup[basicInfo.gender]?.find(cV => cV.id == id)?.name || '';
+    }
+    
     return (
         <>
             {loading && <Loader />}
@@ -207,9 +211,10 @@ export default function ({ metals }) {
                 {showPreview &&
                     <PreviewModel
                         basicInfo={basicInfo}
-                        metalInfo={metalInfo}
-                        previewImages={previewImages}
-                        selectedMetal={selectedMetals}
+                        category = {getCategoryNameFromId(basicInfo.category_id)}
+                        metals={metalInfo}
+                        images={previewImages}
+                        video_url={previewVideo}
                     />
                 }
 
