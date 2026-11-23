@@ -1,7 +1,7 @@
 import express from "express"
 import db from "../../config/db.js"
 import multer from 'multer'
-import { uploadMedia, deleteMedia} from '../../utils/uploadImage.js'
+import { uploadMedia, deleteMedia } from '../../utils/uploadImage.js'
 
 const rounter = express.Router()
 
@@ -35,7 +35,7 @@ rounter.post('/addproduct', upload.fields([
         )
         console.log('images done')
 
-        const videoData = req.files.video? 
+        const videoData = req.files.video ?
             await uploadMedia(req.files.video[0], 'video') :
             null
 
@@ -162,6 +162,26 @@ rounter.get('/allBars', (req, res) => {
     }
 })
 
+rounter.post('/featureProduct/:id', (req, res) => {
+
+    const { id } = req.params
+    try {
+
+        const result = db.prepare(`
+            INSERT INTO featured_products (product_id) VALUES (?)
+        `).run(id)
+
+        if(result.changes == 0)
+            return res.json({message: 'Could not feature Product'})
+        else
+            return res.json({message: 'Featured Product'})
+
+    } catch (error) {
+        console.log(error)
+        return res.json({message: 'Database error, Could not feature Product'})
+    }
+
+})
 
 rounter.delete('/product/:id', async (req, res) => {
     const { id } = req.params
@@ -197,7 +217,7 @@ rounter.delete('/product/:id', async (req, res) => {
             }
         }
 
-        if(videoID && videoID.video_public_id)
+        if (videoID && videoID.video_public_id)
             await deleteMedia(videoID.video_public_id);
 
         res.json({

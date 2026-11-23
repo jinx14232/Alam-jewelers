@@ -40,6 +40,35 @@ function Inventory({ products, bars, setTracker }) {
             setLoading(false)
         }
     }
+
+    async function featureProduct(id) {
+        setLoading(true)
+        try {
+
+            const response = await apiFetch(`/admin/featureProduct/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            if (!response.ok) {
+                alert('Error occoured')
+                throw new Error('Failed to feature product')
+            }
+
+            const res = await response.json()
+            
+            alert(res.message)
+
+        } catch (error) {
+            console.log(error)
+            alert('Error occoured')
+        } finally {
+            setLoading(false)
+        }
+    }
+
     async function deleteBar(id) {
         setLoading(true)
         try {
@@ -68,6 +97,7 @@ function Inventory({ products, bars, setTracker }) {
             setLoading(false)
         }
     }
+
 
     return (
         <section className="add-form">
@@ -105,6 +135,7 @@ function Inventory({ products, bars, setTracker }) {
                                                 item = {item}
                                                 activeTab = {activeTab}
                                                 handleDelete={activeTab == 'products'? deleteProduct : deleteBar}
+                                                handleFeature={activeTab == 'products'? featureProduct : featureBar}
                                             />
                                         ))
                                     }

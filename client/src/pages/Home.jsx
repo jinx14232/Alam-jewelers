@@ -1,96 +1,31 @@
-import react from 'react'
-import Loader from '../componants/Loader'
-import DetailProductCard from '../componants/DetailProductCard';
-import DetailBarCard from '../componants/DetailBarCard';
-import { NavLink } from 'react-router-dom';
-import Hero from '../componants/Hero';
-import { apiFetch } from '../api';
-
-
+import { NavLink } from 'react-router-dom'
+import Hero from '../componants/Hero'
+import Poster from '../componants/Poster'
+import ShopDisplay from '../componants/ShopDisplay'
+import LatestUploads from '../componants/LatestUploads'
+import Featured from '../componants/Featured'
 export default function () {
 
-    const [recents, setRecents] = react.useState({})
-    const [loading, setLoading] = react.useState(true)
-
-    react.useEffect(() => {
-        async function gettInv() {
-
-            try {
-
-                const response = await apiFetch('/client/home')
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch products')
-                }
-
-                const res = await response.json()
-                setRecents(res)
-
-            } catch (error) {
-                console.error(error)
-                alert('Error occored in inventory')
-            } finally {
-                setLoading(false)
-            }
-
-        }
-        gettInv()
-    }, [])
-
-    console.log('recents ',recents)
+    
 
     return (
         <>
             <Hero/>
             <section className="home">
-                <section className="home-section">
-                    <h2>Latest Uploads</h2>
+                
+                <LatestUploads/>
 
-                    {loading ? <Loader /> :
-                        <div className="grid-wrap">
-                            {
-                                (recents.bars?.length == 0 &&
-                                    recents.products.length == 0) ? <p>No recents upload</p> :
+                <ShopDisplay/>
 
-                                    <div className="home-grid">
-                                        {recents.products?.map((product, id) => (
-                                            <DetailProductCard
-                                                key={id}
-                                                product={product}
-
-                                            />
-                                        ))}
-                                        {recents.bars?.map((bar, id) => (
-                                            <DetailBarCard
-                                                key={id}
-                                                bar={bar}
-                                            />
-                                        ))}
-
-                                    </div>
-                            }
-
-                        </div>
-                    }
-
-
-                </section>
-                <section className="home-section">
-                    <div className="poster-con">
-                        <div className="content">
-
-                            <NavLink to='/collection'>
-                                <h1>Finest Collection</h1>
-                                <p>Explore out top rated collection with ratings</p>
-                                <div className="btn">Explore</div>
-                            </NavLink>
-                        </div>
-                        <video autoPlay
-                            muted
-                            loop
-                            playsInline src="/video.mp4" />
-                    </div>
-                </section>
+                <Featured/>
+               
+                <Poster
+                    heading="Finest Collection"
+                    para="Explore out top rated collection with ratings"
+                    button="Explore"
+                    link="/collection"
+                    video="/video.mp4"
+                />
 
                 <section className="home-section">
                     <h2>Categories</h2>
@@ -123,21 +58,13 @@ export default function () {
 
                 </section>
 
-                <section className="home-section">
-                    <div className="poster-con">
-                        <div className="content">
-                            <NavLink to='/bars'>
-                                <h1>Gold Silver Bars</h1>
-                                <p>Take a look at Bars collection.</p>
-                                <div className="btn">Bars</div>
-                            </NavLink>
-                        </div>
-                        <video autoPlay
-                            muted
-                            loop
-                            playsInline src="/video2.mp4" />
-                    </div>
-                </section>
+                <Poster
+                    heading="Gold Silver Bars"
+                    para="Take a look at Bars collection."
+                    button="Bars"
+                    link="/bars"
+                    video="/video2.mp4"
+                />
 
             </section>
         </>

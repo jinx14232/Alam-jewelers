@@ -97,6 +97,26 @@ router.get('/home', (req, res) => {
     }
 })
 
+router.get('/featured', (req, res) => {
+   try {
+        const limit = 3
+        const products = getDetailCardProducts(limit)
+        const bars = getDetailCardBars(limit)
+
+        res.json({
+            products,
+            bars
+        })
+
+    } catch (e) {
+        console.error(e)
+
+        res.status(500).json({
+            message: 'Failed to retrieve inventory'
+        })
+    }
+})
+
 router.get('/product/:id', (req, res) => {
 
     try {
@@ -200,7 +220,6 @@ router.get('/bar/:id', (req, res) => {
 
 })
 
-
 function getDetailCardProducts(limit) {
 
     const products = db.prepare(`
@@ -231,7 +250,6 @@ function getDetailCardProducts(limit) {
         `).all(limit)
 
     return products
-
 }
 
 function getDetailCardBars(limit) {

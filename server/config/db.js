@@ -88,6 +88,16 @@ db.exec(`
             ON DELETE CASCADE
     );
 
+    CREATE TABLE IF NOT EXISTS featured_products(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_id INTEGER NOT NULL UNIQUE,
+
+        FOREIGN KEY (product_id)
+            REFERENCES products(id)
+            ON DELETE CASCADE
+
+    );
+
     CREATE TABLE IF NOT EXISTS bars (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT DEFAULT 'Bar',
