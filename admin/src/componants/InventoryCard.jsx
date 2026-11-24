@@ -1,4 +1,4 @@
-export default function InventoryCard({item, activeTab, handleDelete, handleFeature}) {
+export default function InventoryCard({item, isFeatured, activeTab, handleDelete, handleFeature}) {
     return (
         <>
             <div>
@@ -36,7 +36,12 @@ export default function InventoryCard({item, activeTab, handleDelete, handleFeat
                     </div>
 
                     <button className="product-action delete" onClick={() => handleDelete(item.id)}>Delete</button>
-                    <button className="product-action featured" onClick={() => handleFeature(item.id)}>Set Featured</button>
+                    
+                    <button className="product-action featured"
+                        onClick={() => handleFeature(item.id, isFeatured)}
+                     >
+                        {isFeatured? 'Unmark Featured': 'Mark Featured'}
+                    </button>
 
                 </div>
                 <p className='time'>{item.time}</p>

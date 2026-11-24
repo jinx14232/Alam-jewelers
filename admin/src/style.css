@@ -729,6 +729,7 @@ html {
     color: var(--muted);
     font-size: .9rem;
 }
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -740,6 +741,19 @@ html {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+.featured-grid{
+    display: grid;
+    gap: 18px;
+    grid-auto-flow: column;
+    grid-auto-columns: 220px;
+    grid-template-columns: unset;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+    scrollbar-color: var(--mute) transparent;
 }
 
 /* Responsive layout */

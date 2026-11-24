@@ -1,17 +1,21 @@
 
 import { useState } from 'react'
 import Loader from './Loader';
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import InventoryCard from './InventoryCard';
 import { apiFetch } from '../api';
 
-function Inventory({ products, bars, setTracker }) {
+function Inventory({ products, bars, featureIds, setTracker }) {
 
     const [activeTab, setActiveTab] = useState('products');
     const [loading, setLoading] = useState(false)
 
     const items = activeTab === 'products' ? products : bars;
-    
+
+    function isFeatured(id) {
+        return featureIds.some(fId => fId.product_id == id)
+    }
+
     async function deleteProduct(id) {
         setLoading(true)
         try {
@@ -30,8 +34,8 @@ function Inventory({ products, bars, setTracker }) {
 
             const res = await response.json()
             alert(res.message)
-            if(res)
-                setTracker(prev=> prev+1)
+            if (res)
+                setTracker(prev => prev + 1)
 
         } catch (error) {
             console.log(error)
@@ -41,7 +45,17 @@ function Inventory({ products, bars, setTracker }) {
         }
     }
 
+    async function featureBar(id) {
+
+    }
+
     async function featureProduct(id) {
+
+        if (isFeatured(id)) {
+            console.log('already featured')
+            return
+        }
+
         setLoading(true)
         try {
 
@@ -58,7 +72,7 @@ function Inventory({ products, bars, setTracker }) {
             }
 
             const res = await response.json()
-            
+
             alert(res.message)
 
         } catch (error) {
@@ -87,8 +101,8 @@ function Inventory({ products, bars, setTracker }) {
 
             const res = await response.json()
             alert(res.message)
-            if(res)
-                setTracker(prev=> prev+1)
+            if (res)
+                setTracker(prev => prev + 1)
 
         } catch (error) {
             console.log(error)
@@ -130,17 +144,18 @@ function Inventory({ products, bars, setTracker }) {
 
                                     {
                                         items.slice(0, 5).map((item, id) => (
-                                            <InventoryCard 
+                                            <InventoryCard
                                                 key={id}
-                                                item = {item}
-                                                activeTab = {activeTab}
-                                                handleDelete={activeTab == 'products'? deleteProduct : deleteBar}
-                                                handleFeature={activeTab == 'products'? featureProduct : featureBar}
+                                                item={item}
+                                                isFeatured={isFeatured(item.id)}
+                                                activeTab={activeTab}
+                                                handleDelete={activeTab == 'products' ? deleteProduct : deleteBar}
+                                                handleFeature={activeTab == 'products' ? featureProduct : featureBar}
                                             />
                                         ))
                                     }
                                 </div>
-                                
+
                                 <NavLink className='btn filled view-all' to={`/admin/inventory/${activeTab}`}>
                                     View all {activeTab}
                                 </NavLink>

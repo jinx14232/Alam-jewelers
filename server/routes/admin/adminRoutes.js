@@ -183,6 +183,54 @@ rounter.post('/featureProduct/:id', (req, res) => {
 
 })
 
+rounter.get('/featured', (req, res)=>{
+    try {
+
+        const ids = db.prepare(`
+            SELECT product_id FROM featured_products;
+        `).all()
+
+        const featured = db.prepare(`
+        SELECT
+            p.id,
+            p.name,
+            p.product_code AS code,
+            p.gender AS audience,
+            c.name AS category,
+
+        (SELECT GROUP_CONCAT(m.name, ', ')
+        FROM product_metal pm
+        JOIN metals m ON m.id = pm.metal_id
+        WHERE pm.product_id = p.id) AS metals,
+
+        (SELECT pi.image_url
+        FROM product_images pi
+        WHERE pi.product_id = p.id
+        ORDER BY pi.is_primary DESC
+        LIMIT 1) AS image_url
+
+        FROM products p
+        JOIN categories c
+        ON c.id = p.category_id
+
+        WHERE p.id = ?
+        ORDER BY p.id DESC;
+        `)
+
+        let featuredProducts = []
+
+        for(const id of ids){
+            const product = featured.get(id.product_id)
+            featuredProducts.push(product)
+        }
+
+        res.json({featuredProducts, ids})
+
+    } catch (error) {
+        res.json({featuredProducts:[], ids:[]})
+    }
+})
+
 rounter.delete('/product/:id', async (req, res) => {
     const { id } = req.params
 
