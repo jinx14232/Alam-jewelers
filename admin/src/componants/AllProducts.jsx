@@ -11,9 +11,15 @@ export default function () {
 
     const [products, setProducts] = react.useState([])
     const [loading, setLoading] = react.useState(true)
+    const [tracker, setTracker] = react.useState(0)
+
+    const [deletingItems, setDeletingItems] = react.useState(false)
+    const [featuring, setFeaturing] = react.useState(false)
+
 
     react.useEffect(() => {
-
+        console.log('refetching products')
+        setLoading(true)
         async function getProducts() {
             try {
                 const response = await apiFetch(`/admin/allProducts`)
@@ -35,13 +41,95 @@ export default function () {
         }
         getProducts()
 
-    }, [])
+    }, [tracker])
+
+    async function handleDelete(id, _) {
+
+        setDeletingItems(true)
+        try {
+
+            const response = await apiFetch(`/admin/product/${id}`, {
+                method: 'DELETE'
+            })
+
+            if (!response.ok) {
+                alert('Error occoured')
+                throw new Error('Failed to delete product/bar')
+            }
+
+            const res = await response.json()
+
+            if (res.error) {
+                setDeletingItems(false)
+                alert(res.error)
+                return
+            }
+
+            setDeletingItems(false)
+            alert(res.message)
+            setTracker(prev => prev + 1)
+
+        } catch (error) {
+            console.log(error)
+            alert('Error occoured')
+            setDeletingItems(false)
+        }
+    }
+
+    async function handleFeature(id, isFeatured, _) {
+
+        setFeaturing(true)
+
+        try {
+
+            const response = await apiFetch(`/admin/updateFeatureProduct`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id,
+                    isFeatured: !isFeatured
+                })
+            })
+
+            if (!response.ok) {
+                alert('Error occoured')
+                throw new Error('Failed to feature product')
+            }
+
+            const res = await response.json()
+            alert(res.message)
+
+            onFeature(id, _, !isFeatured)
+
+        } catch (error) {
+
+            console.log(error)
+            alert('Error occoured')
+
+        } finally {
+            setFeaturing(false)
+        }
+    }
+    function onFeature(id, _, isFeatured) {
+
+        setProducts(prev =>
+            prev.map(product =>
+                product.id === id
+                    ? { ...product, isFeatured: isFeatured }
+                    : product
+            )
+        )
+    }
 
     return (
         <>
+            {(deletingItems||featuring) && <Loader />}
+
             <div className="admin-page">
                 <div className="bread-crumbs">
-                    <NavLink to="/admin" end>
+                    <NavLink to="/" end>
                         Dashboard
                     </NavLink>
                     <span> / </span>
@@ -63,10 +151,13 @@ export default function () {
                                     <div className="grid">
 
                                         {
-                                            products.map(item => (
+                                            products.map((item, id) => (
                                                 <InventoryCard
+                                                    key={id}
                                                     item={item}
-                                                    activeTab="products"
+                                                    isProduct={true}
+                                                    handleDelete={handleDelete}
+                                                    handleFeature={handleFeature}
                                                 />
                                             ))
                                         }

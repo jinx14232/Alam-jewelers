@@ -162,73 +162,52 @@ rounter.get('/allBars', (req, res) => {
     }
 })
 
-rounter.post('/featureProduct/:id', (req, res) => {
+rounter.patch('/updateFeatureProduct', (req, res) => {
 
-    const { id } = req.params
+    const { id, isFeatured} = req.body
+
     try {
 
         const result = db.prepare(`
-            INSERT INTO featured_products (product_id) VALUES (?)
-        `).run(id)
+            UPDATE products
+            SET is_featured = ?
+            WHERE id = ?
+        `).run(isFeatured? 1:0, id)
 
         if(result.changes == 0)
-            return res.json({message: 'Could not feature Product'})
+            return res.json({message: 'Could not update feature status'})
         else
-            return res.json({message: 'Featured Product'})
+            return res.json({message: 'Product featured status updated'})
 
     } catch (error) {
         console.log(error)
-        return res.json({message: 'Database error, Could not feature Product'})
+        return res.json({message: 'Database error, Could not update feature status'})
     }
 
 })
 
-rounter.get('/featured', (req, res)=>{
+rounter.patch('/updateFeatureBars', (req, res) => {
+
+    const { id, isFeatured} = req.body
+
     try {
 
-        const ids = db.prepare(`
-            SELECT product_id FROM featured_products;
-        `).all()
+        const result = db.prepare(`
+            UPDATE bars
+            SET is_featured = ?
+            WHERE id = ?
+        `).run(isFeatured? 1:0, id)
 
-        const featured = db.prepare(`
-        SELECT
-            p.id,
-            p.name,
-            p.product_code AS code,
-            p.gender AS audience,
-            c.name AS category,
-
-        (SELECT GROUP_CONCAT(m.name, ', ')
-        FROM product_metal pm
-        JOIN metals m ON m.id = pm.metal_id
-        WHERE pm.product_id = p.id) AS metals,
-
-        (SELECT pi.image_url
-        FROM product_images pi
-        WHERE pi.product_id = p.id
-        ORDER BY pi.is_primary DESC
-        LIMIT 1) AS image_url
-
-        FROM products p
-        JOIN categories c
-        ON c.id = p.category_id
-
-        WHERE p.id = ?
-        ORDER BY p.id DESC;
-        `)
-
-        let featuredProducts = []
-
-        for(const id of ids){
-            const product = featured.get(id.product_id)
-            featuredProducts.push(product)
-        }
-
-        res.json({featuredProducts, ids})
+        if(result.changes == 0)
+            return res.json({message: 'Could not update feature status'})
+        else
+            return res.json({message: 'Product featured status updated'})
 
     } catch (error) {
-        res.json({featuredProducts:[], ids:[]})
+        console.log(error)
+        return res.json({message: 'Database error, Could not update feature status'})
     }
+
 })
 
 rounter.delete('/product/:id', async (req, res) => {
@@ -255,7 +234,7 @@ rounter.delete('/product/:id', async (req, res) => {
 
         if (result.changes === 0) {
             return res.status(404).json({
-                message: 'Product not found'
+                error: 'Product not found'
             });
         }
 
@@ -276,7 +255,7 @@ rounter.delete('/product/:id', async (req, res) => {
         console.error(err);
 
         res.status(500).json({
-            message: 'Failed to delete product'
+            error: 'Failed to delete product'
         });
     }
 
@@ -416,6 +395,7 @@ function getInventoryProducts(limit) {
             p.product_code AS code,
             p.gender AS audience,
             c.name AS category,
+            is_featured AS isFeatured,
             created_at AS time,
 
         (SELECT GROUP_CONCAT(m.name, ', ')
@@ -452,7 +432,8 @@ function getInventoryBars(limit) {
                 brand,
                 weight,
                 weight_unit AS unit,
-                created_at AS time
+                created_at AS time,
+                is_featured AS isFeatured
             FROM bars
             ORDER BY id DESC
             LIMIT ?;

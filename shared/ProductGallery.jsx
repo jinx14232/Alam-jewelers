@@ -192,7 +192,7 @@ export default function ProductGallery({ images = [], videoUrl = '', preview = f
                             
                         >
                             <img
-                                src={images[0].image_url}
+                                src={images[0]?.image_url}
                                 alt="Product"
                             />
                             <span className="gallery-zoom-hint">

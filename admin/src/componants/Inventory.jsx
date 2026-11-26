@@ -1,119 +1,62 @@
 
 import { useState } from 'react'
-import Loader from './Loader';
 import { NavLink } from 'react-router-dom'
 import InventoryCard from './InventoryCard';
-import { apiFetch } from '../api';
+import Loader from './Loader';
 
-function Inventory({ products, bars, featureIds, setTracker }) {
+function Inventory({ products, bars, loadingItems, setInvTracker, onFeature }) {
 
     const [activeTab, setActiveTab] = useState('products');
-    const [loading, setLoading] = useState(false)
-
     const items = activeTab === 'products' ? products : bars;
 
-    function isFeatured(id) {
-        return featureIds.some(fId => fId.product_id == id)
-    }
+    const [deletingItems, setDeletingItems] = useState(false)
 
-    async function deleteProduct(id) {
-        setLoading(true)
+    async function handleDelete(id, isProduct) {
+
+        setDeletingItems(true)
         try {
 
-            const response = await apiFetch(`/admin/product/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            const response = isProduct ? await apiFetch(`/admin/product/${id}`, {
+                method: 'DELETE'
+            }) :
+                await apiFetch(`/admin/bar/${id}`, {
+                    method: 'DELETE'
+                })
 
             if (!response.ok) {
                 alert('Error occoured')
-                throw new Error('Failed to delete product')
-            }
-
-            const res = await response.json()
-            alert(res.message)
-            if (res)
-                setTracker(prev => prev + 1)
-
-        } catch (error) {
-            console.log(error)
-            alert('Error occoured')
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    async function featureBar(id) {
-
-    }
-
-    async function featureProduct(id) {
-
-        if (isFeatured(id)) {
-            console.log('already featured')
-            return
-        }
-
-        setLoading(true)
-        try {
-
-            const response = await apiFetch(`/admin/featureProduct/${id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-
-            if (!response.ok) {
-                alert('Error occoured')
-                throw new Error('Failed to feature product')
+                throw new Error('Failed to delete product/bar')
             }
 
             const res = await response.json()
 
-            alert(res.message)
-
-        } catch (error) {
-            console.log(error)
-            alert('Error occoured')
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    async function deleteBar(id) {
-        setLoading(true)
-        try {
-
-            const response = await apiFetch(`/admin/bar/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-
-            if (!response.ok) {
-                alert('Error occoured')
-                throw new Error('Failed to delete bar')
+            if(res.error){
+                setDeletingItems(false)
+                alert(res.error)
+                return
             }
-
-            const res = await response.json()
+            
             alert(res.message)
-            if (res)
-                setTracker(prev => prev + 1)
+
+            setDeletingItems(false)
+
+            //refetch the items
+            setInvTracker(prev => prev + 1)
 
         } catch (error) {
             console.log(error)
             alert('Error occoured')
-        } finally {
-            setLoading(false)
-        }
+            setDeletingItems(false)
+        } 
     }
+
 
 
     return (
+        <>
+
+        {deletingItems && <Loader/>} 
+
         <section className="add-form">
 
             <div className="form-section">
@@ -135,10 +78,12 @@ function Inventory({ products, bars, featureIds, setTracker }) {
                     </button>
                 </div>
 
-                {!loading ?
-                    <div className="inventory">
-                        <h2>Recent Uploads</h2>
-                        {items.length > 0 ?
+                <div className="inventory">
+                    <h2>Recent Uploads</h2>
+
+                    {loadingItems ? <Loader /> :
+
+                        items.length > 0 ?
                             <>
                                 <div className="grid">
 
@@ -147,10 +92,9 @@ function Inventory({ products, bars, featureIds, setTracker }) {
                                             <InventoryCard
                                                 key={id}
                                                 item={item}
-                                                isFeatured={isFeatured(item.id)}
-                                                activeTab={activeTab}
-                                                handleDelete={activeTab == 'products' ? deleteProduct : deleteBar}
-                                                handleFeature={activeTab == 'products' ? featureProduct : featureBar}
+                                                isProduct={activeTab == 'products'}
+                                                handleDelete={handleDelete}
+                                                handleFeature={onFeature}
                                             />
                                         ))
                                     }
@@ -161,17 +105,21 @@ function Inventory({ products, bars, featureIds, setTracker }) {
                                 </NavLink>
 
                             </>
-                            : (
+                            :
+                            (
                                 <p className="empty-inventory">
                                     No items found.
                                 </p>
-                            )}
-                    </div>
-                    : <Loader />}
+                            )
+
+                    }
+
+                </div>
 
             </div>
 
         </section>
+        </>
     )
 }
 

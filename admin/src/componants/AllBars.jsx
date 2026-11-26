@@ -11,6 +11,10 @@ export default function () {
 
     const [bars, setBars] = react.useState([])
     const [loading, setLoading] = react.useState(true)
+    const [tracker, setTracker] = react.useState(0)
+
+    const [deletingItems, setDeletingItems] = react.useState(false)
+    const [featuring, setFeaturing] = react.useState(false)
 
     react.useEffect(() => {
 
@@ -35,13 +39,96 @@ export default function () {
         }
         getBars()
 
-    }, [])
+    }, [tracker])
+
+    async function handleDelete(id, _) {
+
+        setDeletingItems(true)
+        try {
+
+            const response = await apiFetch(`/admin/bar/${id}`, {
+                method: 'DELETE'
+            })
+
+            if (!response.ok) {
+                alert('Error occoured')
+                throw new Error('Failed to delete product/bar')
+            }
+
+            const res = await response.json()
+
+            if (res.error) {
+                setDeletingItems(false)
+                alert(res.error)
+                return
+            }
+
+            setDeletingItems(false)
+            alert(res.message)
+            setTracker(prev => prev + 1)
+
+        } catch (error) {
+            console.log(error)
+            alert('Error occoured')
+            setDeletingItems(false)
+        }
+    }
+
+    async function handleFeature(id, isFeatured, _) {
+
+        setFeaturing(true)
+
+        try {
+
+            const response = await apiFetch(`/admin/updateFeatureBar`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id,
+                    isFeatured: !isFeatured
+                })
+            })
+
+            if (!response.ok) {
+                alert('Error occoured')
+                throw new Error('Failed to feature product')
+            }
+
+            const res = await response.json()
+            alert(res.message)
+
+            onFeature(id, _, !isFeatured)
+
+        } catch (error) {
+
+            console.log(error)
+            alert('Error occoured')
+
+        } finally {
+            setFeaturing(false)
+        }
+    }
+    function onFeature(id, _, isFeatured) {
+
+        setBars(prev =>
+            prev.map(product =>
+                product.id === id
+                    ? { ...product, isFeatured: isFeatured }
+                    : product
+            )
+        )
+    }
+
 
     return (
         <>
+            {(deletingItems || featuring) && <Loader />}
+
             <div className="admin-page">
                 <div className="bread-crumbs">
-                    <NavLink to="/admin" end>
+                    <NavLink to="/" end>
                         Dashboard
                     </NavLink>
                     <span> / </span>
@@ -67,7 +154,9 @@ export default function () {
                                                 <InventoryCard
                                                     key={id}
                                                     item={item}
-                                                    activeTab="bars"
+                                                    isProduct={false}
+                                                    handleDelete={handleDelete}
+                                                    handleFeature={handleFeature}
                                                 />
 
                                             ))

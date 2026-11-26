@@ -48,6 +48,8 @@ db.exec(`
         gender TEXT NOT NULL
             CHECK (gender IN ('women', 'men', 'newBorn')),
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        is_featured INT DEFAULT 0
+            CHECK (is_featured IN (0, 1)),
 
         video_url TEXT,
         video_public_id TEXT,
@@ -88,16 +90,6 @@ db.exec(`
             ON DELETE CASCADE
     );
 
-    CREATE TABLE IF NOT EXISTS featured_products(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        product_id INTEGER NOT NULL UNIQUE,
-
-        FOREIGN KEY (product_id)
-            REFERENCES products(id)
-            ON DELETE CASCADE
-
-    );
-
     CREATE TABLE IF NOT EXISTS bars (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT DEFAULT 'Bar',
@@ -108,6 +100,8 @@ db.exec(`
         brand TEXT NOT NULL DEFAULT 'ARY',
         fineness REAL,
         karat INT,
+        is_featured INT DEFAULT 0
+            CHECK (is_featured IN (0, 1)),
         bar_code TEXT NOT NULL UNIQUE,
         image_url TEXT NOT NULL , 
         public_id TEXT NOT NULL,
