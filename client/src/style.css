@@ -574,9 +574,6 @@ button {
     }
 }
 
-
-
-
 /* -----HOME ------ */
 
 .home {
@@ -737,7 +734,7 @@ button {
 .video-container{
 
     position: relative;
-    min-height: 580px;
+    min-height: 450px;
 
     video{
     position: absolute;

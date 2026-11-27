@@ -51,7 +51,7 @@ export default function () {
 
     async function deleteCat(id) {
         setLoading(true)
-        
+
         try {
             const res = await apiFetch(
                 `/admin/category/${id}`,
@@ -173,30 +173,34 @@ export default function () {
                 </form>
                 <section className="add-form">
 
-                    {!loading &&
-                        <section className="form-section">
-                            <h2>Current Categories</h2>
-                            {Object.entries(currentCategories).map(([audience, cats]) => (
-                                <div className="category-group" key={audience}>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>{Audience[audience]}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {cats.map(cat => (
-                                                <tr key={cat.id}>
-                                                    <td>{cat.name}</td>
-                                                    <td><button onClick={() => deleteCat(cat.id)} >delete</button></td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            ))}
-                        </section>
-                    }
+                    <section className="form-section">
+                        <h2>Current Categories</h2>
+                        {!loading &&
+                            <>
+                                {
+                                    Object.entries(currentCategories).map(([audience, cats]) => (
+                                        <div className="category-group" key={audience}>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>{Audience[audience]}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {cats.map(cat => (
+                                                        <tr key={cat.id}>
+                                                            <td>{cat.name}</td>
+                                                            <td><button onClick={() => deleteCat(cat.id)} >delete</button></td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    ))
+                                }
+                            </>
+                        }
+                    </section>
                 </section>
 
 

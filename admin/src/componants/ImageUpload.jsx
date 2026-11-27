@@ -61,12 +61,12 @@ export default function ImageUpload({ heading, maxUploads, images, onImagesChang
                     </span>
 
                     <span className="upload-formats">
-                        PNG, JPG, WEBP · Up to {maxUploads} image{maxUploads > 1 ? 's' : ''}
+                        PNG, JPG, WEBP, HEIF · Up to {maxUploads} image{maxUploads > 1 ? 's' : ''}
                     </span>
 
                     <input
                         type="file"
-                        accept="image/png,image/jpeg,image/webp"
+                        accept="image/png,image/jpeg,image/webp,image/HEIF"
                         multiple
                         hidden
                         onChange={handleImageChange}

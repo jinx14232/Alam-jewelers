@@ -35,17 +35,21 @@ export default function Featured() {
         gettInv()
     }, [])
 
-    console.log('recents ',recents)
+    console.log('recents ', recents)
 
     return (
         <>
             <section className="home-section">
-                <h2>Latest Uploads</h2>
+                <h2>Forever Loved</h2>
+                <div className="text">
+                    <p>Look our Featured Collection</p>
+                </div>
+
                 {loading ? <Loader /> :
                     <div className="grid-wrap">
                         {
                             (recents.bars?.length == 0 &&
-                                recents.products.length == 0) ? <p>No recents upload</p> :
+                                recents.products.length == 0) ? <p>No Featured Products found</p> :
 
                                 <div className="home-grid">
                                     {recents.products?.map((product, id) => (

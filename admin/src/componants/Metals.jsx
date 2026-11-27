@@ -1,6 +1,7 @@
 import { apiFetch } from "../api"
 import Header from "./Header"
 import react from 'react'
+import Rates from "./Rates"
 
 export default function () {
 
@@ -37,9 +38,11 @@ export default function () {
         <>
             <div className="admin-page">
                 <Header
-                    heading='Metals'
-                    subHeading='Take a look at current Metlas'
+                    heading='Metals/Rates'
+                    subHeading='Set Rates of Gold'
                 />
+
+                <Rates />
 
                 <section className="add-form">
                     <section className="form-section">

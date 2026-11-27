@@ -100,8 +100,8 @@ router.get('/home', (req, res) => {
 router.get('/featured', (req, res) => {
    try {
         const limit = 3
-        const products = getDetailCardProducts(limit)
-        const bars = getDetailCardBars(limit)
+        const products = getFeatureProducts()
+        const bars = getFeatureBars()
 
         res.json({
             products,
@@ -267,6 +267,54 @@ function getDetailCardBars(limit) {
 
     return bars
 
+}
+function getFeatureBars() {
+    const bars = db.prepare(`
+            SELECT
+                id,
+                name,
+                image_url,
+                metal,
+                brand
+            FROM bars
+            WHERE is_featured = 1
+            ORDER BY id DESC
+        `).all()
+
+    return bars
+
+}
+
+function getFeatureProducts() {
+
+    const products = db.prepare(`
+        SELECT
+            p.id,
+            p.name,
+            p.gender AS audience,
+            c.name AS category,
+            created_at AS time,
+
+        (SELECT GROUP_CONCAT(m.name, ', ')
+        FROM product_metal pm
+        JOIN metals m ON m.id = pm.metal_id
+        WHERE pm.product_id = p.id) AS metals,
+
+        (SELECT pi.image_url
+        FROM product_images pi
+        WHERE pi.product_id = p.id
+        ORDER BY pi.is_primary DESC
+        LIMIT 1) AS image_url
+
+        FROM products p
+        JOIN categories c
+        ON c.id = p.category_id
+
+        WHERE p.is_featured = 1
+        ORDER BY p.id DESC;
+        `).all()
+
+    return products
 }
 
 // router.get('/productCard', (req, res) => {

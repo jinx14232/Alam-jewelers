@@ -557,7 +557,8 @@ html {
         font-family: 'Jost';
         text-transform: capitalize;
     }
-    td button{
+
+    td button {
         background: none;
         border: none;
         text-decoration: underline;
@@ -596,6 +597,21 @@ html {
     }
 }
 
+.rate-card {
+    span {
+        color: var(--gold);
+        font-size: 1rem;
+        letter-spacing: 2px;
+        font-family: 'Cormorant Garamond', serif;
+    }
+
+    h3 {
+        font-family: 'Jost', serif;
+        font-size: clamp(2em, 3vw, 3em);
+        font-weight: 400;
+        color: var(--ink);
+    }
+}
 
 .chart-item {
     margin-bottom: 20px;
@@ -675,12 +691,13 @@ html {
     .data>.meta {
         color: var(--mute);
     }
-    .product-action{
+
+    .product-action {
         opacity: 1;
     }
 }
 
-.product-action{
+.product-action {
     opacity: 0;
     transition: opacity 0.2s ease;
     background: none;
@@ -693,26 +710,29 @@ html {
     font-family: 'Jost';
 }
 
-.delete{
+.delete {
     bottom: 35px;
     right: 10px;
 }
-.featured{
+
+.featured {
     bottom: 10px;
     right: 10px;
 }
 
-.time{
+.time {
     font-size: .9rem;
     color: var(--muted);
 }
+
 .empty-inventory {
     text-align: center;
     padding: 30px;
     font-size: 1.3rem;
     color: var(--muted);
 }
-.view-all{
+
+.view-all {
     text-wrap: nowrap;
     text-decoration: none;
     text-align: center;
@@ -721,10 +741,12 @@ html {
     transition: 0.2s;
     font-family: 'Jost', Arial, Helvetica, sans-serif;
 }
-.bread-crumbs{
+
+.bread-crumbs {
     padding: 5px;
 }
-.bread-crumbs a{
+
+.bread-crumbs a {
     font-family: inherit;
     color: var(--muted);
     font-size: .9rem;
@@ -742,7 +764,8 @@ html {
     flex-direction: column;
     gap: 20px;
 }
-.featured-grid{
+
+.featured-grid {
     display: grid;
     gap: 18px;
     grid-auto-flow: column;
@@ -759,7 +782,7 @@ html {
 /* Responsive layout */
 
 @media (hover: none) {
-    .product-action{
+    .product-action {
         opacity: 1;
     }
 }
@@ -914,4 +937,3 @@ html {
     color: var(--mute);
     z-index: 2
 }
-

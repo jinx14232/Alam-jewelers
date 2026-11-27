@@ -44,12 +44,12 @@ export default function VideoUpload({ heading, video, onVideoChange, previewVide
                     </span>
 
                     <span className="upload-formats">
-                        video/mp4, video/webm · Up to 1 video
+                        mp4, webm, HEVC · Up to 1 video
                     </span>
 
                     <input
                         type="file"
-                        accept="video/mp4,video/webm"
+                        accept="video/mp4,video/webm,video/HEVC"
                         hidden
                         onChange={handleVideoChange}
                         disabled={!!video}
